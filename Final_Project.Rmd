@@ -1,6 +1,6 @@
 ---
-title: "Final Project"
-author: ""
+title: "Final Project Code"
+author: "Siyao Ma"
 date: ""
 output: 
   html_document:
@@ -20,65 +20,74 @@ includeSourceDocuments()
 
 **NOTE: this is only a rough draft of the code and resulting graphs; will be refined later on**
 ```{r}
-
 col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_lat", "p_long", "d_lat", "d_long", "payment_type", "fare", "total")
-
 
 #yellow taxi data 12/2015
 y15_12 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-12_sort.csv')
 names(y15_12) <- col_names
 y15_12<- y15_12 %>%
   mutate(month = lubridate::month(p_time))
+
 #yellow taxi data 11/2015
 y15_11 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-11_sort.csv')
 names(y15_11) <- col_names
 y15_11<- y15_11 %>%
   mutate(month = lubridate::month(p_time))
+
 #yellow taxi data 10/2015
 y15_10 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-10_sort.csv')
 names(y15_10) <- col_names
 y15_10<- y15_10 %>%
   mutate(month = lubridate::month(p_time))
+
 #yellow taxi data 09/2015
 y15_09 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-09_sort.csv')
 names(y15_09) <- col_names
 y15_09<- y15_09 %>%
   mutate(month = lubridate::month(p_time))
+
 #yellow taxi data 08/2015
 y15_08 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-08_sort.csv')
 names(y15_08) <- col_names
 y15_08<- y15_08 %>%
   mutate(month = lubridate::month(p_time))
+
 #yellow taxi data 07/2015
 y15_07 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-07_sort.csv')
 names(y15_07) <- col_names
 y15_07<- y15_07 %>%
   mutate(month = lubridate::month(p_time))
+
 #yellow taxi data 06/2015
 y15_06 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-06_sort.csv')
 names(y15_06) <- col_names
 y15_06<- y15_06 %>%
   mutate(month = lubridate::month(p_time))
+
 #yellow taxi data 05/2015
 y15_05 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-05_sort.csv')
 names(y15_05) <- col_names
 y15_05 <- y15_05 %>%
   mutate(month = lubridate::month(p_time))
+
 #yellow taxi data 04/2015
 y15_04 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-04_sort.csv')
 names(y15_04) <- col_names
 y15_04 <- y15_04 %>%
   mutate(month = lubridate::month(p_time))
+
 #yellow taxi data 03/2015
 y15_03 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-03_sort.csv')
 names(y15_03) <- col_names
 y15_03 <- y15_03 %>%
   mutate(month = lubridate::month(p_time))
+
 #yellow taxi data 02/2015
 y15_02 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-02_sort.csv')
 names(y15_02) <- col_names
 y15_02 <- y15_02 %>%
   mutate(month = lubridate::month(p_time))
+
 #yellow taxi data 01/2015
 y15_01 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-01_sort.csv')
 names(y15_01) <- col_names
@@ -86,7 +95,6 @@ y15_01 <- y15_01 %>%
   mutate(month = lubridate::month(p_time))
 
 y15 <- rbind(y15_12, y15_11, y15_10, y15_09, y15_08, y15_07, y15_06, y15_05, y15_04, y15_03, y15_02, y15_01)
-
 ```
 
 ```{r}
@@ -105,13 +113,13 @@ y15 %>% #faceted by month
   facet_wrap(~ month)
 
 y15 %>% #entire year, without outliers
-  filter(distance < 500) %>%
+  filter(distance < 50) %>%
   ggplot(aes(y = total, x = distance)) +
   geom_point() +
   geom_smooth(se = FALSE) 
 
 y15 %>% #faceted by month, without outliers
-  filter(distance < 500) %>%
+  filter(distance < 50) %>%
   ggplot(aes(y = total, x = distance)) +
   geom_point() +
   geom_smooth(se = FALSE) +
@@ -122,9 +130,11 @@ y15 %>% #faceted by month, without outliers
 #total number of taxi rides v. day of week
 y15_day <- y15 %>%
   mutate(weekday = lubridate::wday(p_time))
+
 y15_day <- y15_day %>%
   group_by(weekday) %>%
   summarise(tot = n())
+
 ggplot(y15_day, aes(y = tot, x = weekday, col = weekday)) +
   geom_bar(stat ="identity")
 
@@ -132,20 +142,25 @@ ggplot(y15_day, aes(y = tot, x = weekday, col = weekday)) +
 #NOTE have to account for the fact that not all months have the same amount of days
 y15_month <- y15 %>%
   mutate(mday = lubridate::mday(p_time))
+
 y15_month <- y15_month %>%
   group_by(mday) %>%
   summarise(tot = n())
+
 ggplot(y15_month, aes(y = tot, x = mday, col = mday)) +
   geom_bar(stat ="identity")
 
 #total number of taxi rides v. day of year
 y15_year <- y15 %>%
   mutate(yday = lubridate::yday(p_time))
+
 y15_year <- y15_year %>%
   group_by(yday) %>%
   summarise(tot = n())
+
 ggplot(y15_year, aes(y = tot, x = yday, col = yday)) +
   geom_bar(stat ="identity")
+
 ggplot(y15_year, aes(y = tot, x = yday, col = yday)) +
   geom_line()
 ```
@@ -155,9 +170,9 @@ ggplot(y15_year, aes(y = tot, x = yday, col = yday)) +
 y15_pay <- y15 %>%
   group_by(payment_type) %>%
   summarise(tot = n())
+
 ggplot(y15_pay, aes(y = tot, x = payment_type)) +
   geom_bar(stat ="identity")
-
 
 #total amount paid v. payment type (undetermined what each number stands for...)
 y15 %>% #entire year
@@ -165,4 +180,3 @@ y15 %>% #entire year
   ggplot(aes(y = total, x = payment_type)) +
   geom_point()
 ```
-
