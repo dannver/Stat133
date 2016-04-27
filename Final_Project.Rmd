@@ -102,24 +102,26 @@ y15 <- rbind(y15_12, y15_11, y15_10, y15_09, y15_08, y15_07, y15_06, y15_05, y15
 #will probably filter out outliers 
 
 y15 %>% #entire year
+  filter(total > 0) %>%
   ggplot(aes(y = total, x = distance)) +
   geom_point() +
   geom_smooth(se = FALSE) 
 
 y15 %>% #faceted by month
+  filter(total > 0) %>%
   ggplot(aes(y = total, x = distance)) +
   geom_point() +
   geom_smooth(se = FALSE) +
   facet_wrap(~ month)
 
 y15 %>% #entire year, without outliers
-  filter(distance < 50) %>%
+  filter(distance < 50, total > 0) %>%
   ggplot(aes(y = total, x = distance)) +
   geom_point() +
   geom_smooth(se = FALSE) 
 
 y15 %>% #faceted by month, without outliers
-  filter(distance < 50) %>%
+  filter(distance < 50, total > 0) %>%
   ggplot(aes(y = total, x = distance)) +
   geom_point() +
   geom_smooth(se = FALSE) +
@@ -180,3 +182,21 @@ y15 %>% #entire year
   ggplot(aes(y = total, x = payment_type)) +
   geom_point()
 ```
+
+```{r}
+#number of taxi rides per hour 
+y15_hour <- data.frame(y15, hour = str_sub(y15$p_time, -9, -7)) %>%
+  mutate(weekday = lubridate::wday(p_time)) %>%
+  group_by(hour, weekday) %>%
+  summarise(tot = n())
+ggplot(y15_hour, aes(y = tot, x = hour, fill = weekday)) +
+  geom_bar(stat ="identity") 
+```
+
+```{r, fig.width=10, fig.height=10}
+#number of taxi rides by hour (seperated by weekday)
+ggplot(y15_hour, aes(y = tot, x = hour, fill = weekday)) +
+  geom_bar(stat ="identity") +
+  facet_grid(weekday ~ .)
+```
+
