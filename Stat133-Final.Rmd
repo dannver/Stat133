@@ -1,0 +1,294 @@
+---
+title: "Stats 133 Final Project Code"
+author: "Siyao Ma, Dannver Wu, Sudeshna Barman"
+date: "Wednesday, April 27, 2016"
+output: 
+  html_document:
+    fig_height: 3
+    fig_width: 5
+---
+<!-- Don't edit in between this line and the one below -->
+```{r include=FALSE}
+# Don't delete this chunk if you are using the DataComputing package
+library(DataComputing)
+```
+*Source file* 
+```{r, results='asis', echo=FALSE}
+includeSourceDocuments()
+```
+<!-- Don't edit the material above this line -->
+
+**Downloading and Formatting the Data**
+```{r}
+col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_lat", "p_long", "d_lat", "d_long", "payment_type", "fare", "total")
+
+#yellow taxi data 12/2015
+y15_12 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-12_sort.csv')
+names(y15_12) <- col_names
+y15_12<- y15_12 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 11/2015
+y15_11 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-11_sort.csv')
+names(y15_11) <- col_names
+y15_11<- y15_11 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 10/2015
+y15_10 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-10_sort.csv')
+names(y15_10) <- col_names
+y15_10<- y15_10 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 09/2015
+y15_09 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-09_sort.csv')
+names(y15_09) <- col_names
+y15_09<- y15_09 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 08/2015
+y15_08 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-08_sort.csv')
+names(y15_08) <- col_names
+y15_08<- y15_08 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 07/2015
+y15_07 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-07_sort.csv')
+names(y15_07) <- col_names
+y15_07<- y15_07 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 06/2015
+y15_06 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-06_sort.csv')
+names(y15_06) <- col_names
+y15_06<- y15_06 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 05/2015
+y15_05 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-05_sort.csv')
+names(y15_05) <- col_names
+y15_05 <- y15_05 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 04/2015
+y15_04 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-04_sort.csv')
+names(y15_04) <- col_names
+y15_04 <- y15_04 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 03/2015
+y15_03 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-03_sort.csv')
+names(y15_03) <- col_names
+y15_03 <- y15_03 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 02/2015
+y15_02 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-02_sort.csv')
+names(y15_02) <- col_names
+y15_02 <- y15_02 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 01/2015
+y15_01 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-01_sort.csv')
+names(y15_01) <- col_names
+y15_01 <- y15_01 %>%
+  mutate(month = lubridate::month(p_time))
+
+y15 <- rbind(y15_12, y15_11, y15_10, y15_09, y15_08, y15_07, y15_06, y15_05, y15_04, y15_03, y15_02, y15_01)
+```
+
+**Fares**
+```{r}
+#total amount paid (including surchage, tolls, etc) v. distance traveled
+
+y15 %>% #entire year, without outliers
+  filter(distance < 50, total_fare > 0) %>%
+  ggplot(aes(y = total_fare, x = distance)) +
+  geom_point() +
+  geom_smooth(se = FALSE) 
+
+y15 %>% #faceted by month, without outliers
+  filter(distance < 50, total_fare > 0) %>%
+  ggplot(aes(y = total_fare, x = distance)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  facet_wrap(~ month)
+```
+
+```{r}
+#average fare by month, without outliers
+y15_month <- y15 %>%
+  mutate(month = lubridate::month(pickup_time))
+
+y15_month_ave_fare <- y15_month %>%
+  filter(total_fare > 0, total_fare <100)
+  group_by(month)%>%
+  summarize(ave=mean(total_fare))
+
+y15_month_ave_fare %>%
+  ggplot(aes(x=month, y=ave)) +
+  geom_point()
+  
+#average fare by day of the week, without outliers
+y15_day <- y15 %>%
+  mutate(weekday = lubridate::wday(pickup_time))
+
+y15_day_ave_fare <- y15_day %>%
+  filter(total_fare > 0, total_fare <100)
+  group_by(weekday)%>%
+  summarize(ave=mean(total_fare))
+  
+y15_day_ave_fare %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_point()
+
+#average fare by time of day, without outliers
+y15_hour <- y15 %>%
+  mutate(hour = str_sub(y15$p_time, -9, -7))
+
+y15_hour_ave_fare <- y15_hour %>%
+  filter(total_fare > 0, total_fare <100) %>%
+  group_by(hour) %>%
+  summarize(ave=mean(total_fare))
+
+y15_hour_ave_fare %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_point()
+```
+
+**Trip Length**
+```{r}
+#average trip length by month, without outliers
+y15_month <- y15 %>%
+  mutate(month = lubridate::month(pickup_time))
+
+y15_month_ave_dist <- y15_month %>%
+  filter(distance > 0, distance < 50)
+  group_by(month)%>%
+  summarize(ave=mean(distance))
+
+y15_month_ave_dist %>%
+  ggplot(aes(x=month, y=ave)) +
+  geom_point()
+
+#average trip length by day of the week, without outliers
+y15_day <- y15 %>%
+  mutate(weekday = lubridate::wday(pickup_time))
+
+y15_day_ave_dist <- y15_day %>%
+  filter(distance > 0, distance < 50)
+  group_by(weekday)%>%
+  summarize(ave=mean(distance))
+  
+y15_day_ave_dist %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_point()
+
+#average trip length by time of day
+y15_hour <- y15 %>%
+  mutate(hour = str_sub(y15$p_time, -9, -7))
+
+y15_hour_ave_dist <- y15_hour %>%
+  filter(distance > 0, distance < 50) %>%
+  group_by(hour) %>%
+  summarize(ave=mean(distance))
+
+y15_hour_ave_dist %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_point()
+```
+
+**Number of Rides**
+```{r}
+#total number of taxi rides per month
+y15_month <- y15 %>%
+  mutate(month = lubridate::month(pickup_time))
+
+y15_month_tot <- y15_month %>%
+  group_by(month)%>%
+  summarize(tot = n())
+
+y15_month_tot %>%
+  ggplot(aes(x = month, y = tot)) + 
+  geom_bar(stat ="identity")
+
+#total number of taxi rides for each day of week
+y15_day <- y15 %>%
+  mutate(weekday = lubridate::wday(pickup_time))
+
+y15_day_tot <- y15_day %>%
+  group_by(weekday) %>%
+  summarise(tot = n())
+
+y15_day_tot %>%
+  ggplot(aes(y = tot, x = weekday)) +
+  geom_bar(stat ="identity")
+
+#average number of taxi rides for each day of the week
+
+#total number of taxi rides per hour
+y15_hour <- y15 %>%
+  mutate(hour = str_sub(y15$p_time, -9, -7))
+
+y15_hour_tot <- y15_hour %>%
+  group_by(hour) %>%
+  summarize(tot = n())
+
+y15_hour_tot %>%
+  ggplot(aes(x = hour, y = tot)) +
+  geom_bar(stat ="identity")
+
+#average number of taxi rides per hour           
+
+```
+
+**Pick-Up Locations**
+```{r}
+y15_pickup <- y15 %>%
+  mutate(coordinates=paste(y15$pickup_long, y15$pickup_lat, 0, sep=", "))
+p_coordinates <- y15_pickup$coordinates
+head(p_coordinates, 6)
+
+library(XML)
+doc <- newXMLDoc()
+root <- newXMLNode("kml", namespaceDefinitions = "http://www.opengis.net/kml/2.2", doc=doc) 
+child1 <- newXMLNode("Document", parent = root)
+newXMLNode("name", "Pick Up Locations", parent = child1)
+for (i in p_coordinates) {
+    print(child2 <- newXMLNode("Placemark", parent = child1))
+    print(child3 <- newXMLNode("Point", parent = child2))
+    print(newXMLNode("coordinates", paste(i), parent = child3))
+}
+saveXML(doc, file = "C:\\Users\\Sudeshna_Barman\\Documents\\Stat133\\Pick-Up-Locations.kml")
+```
+
+**Drop-Off Locations**
+```{r}
+y15_dropoff <- y15 %>%
+  mutate(coordinates=paste(y15$dropoff_long, y15$dropoff_lat, 0, sep=", "))
+d_coordinates <- y15_dropoff$coordinates
+head(d_coordinates, 6)
+
+library(XML)
+doc <- newXMLDoc()
+root <- newXMLNode("kml", namespaceDefinitions = "http://www.opengis.net/kml/2.2", doc=doc) 
+child1 <- newXMLNode("Document", parent = root)
+newXMLNode("name", "Drop Off Locations", parent = child1)
+for (i in d_coordinates) {
+    print(child2 <- newXMLNode("Placemark", parent = child1))
+    print(child3 <- newXMLNode("Point", parent = child2))
+    print(newXMLNode("coordinates", paste(i), parent = child3))
+}
+saveXML(doc, file = "C:\\Users\\Sudeshna_Barman\\Documents\\Stat133\\Drop-Off-Locations.kml")
+```
+
+**Number of Passengers**
+```{r}
+y15_passengers <- y15 %>%
+  group_by(number_of_passengers) %>%
+  summarize(tot = n())
+  
+y15_passengers %>%
+  ggplot(aes(x = number_of_passengers, y = tot))
+  geom_bar(stat ="identity")
+```
