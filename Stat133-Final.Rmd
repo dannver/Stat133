@@ -102,14 +102,15 @@ y15 <- rbind(y15_12, y15_11, y15_10, y15_09, y15_08, y15_07, y15_06, y15_05, y15
 #total amount paid (including surchage, tolls, etc) v. distance traveled
 
 y15 %>% #entire year, without outliers
-  filter(distance < 50, total_fare > 0) %>%
-  ggplot(aes(y = total_fare, x = distance)) +
+  filter(distance < 50, total > 0) %>%
+  ggplot(aes(y = total, x = distance)) +
   geom_point() +
   geom_smooth(se = FALSE) 
 
 y15 %>% #faceted by month, without outliers
-  filter(distance < 50, total_fare > 0) %>%
-  ggplot(aes(y = total_fare, x = distance)) +
+  filter(distance < 50, total > 0) %>%
+  mutate(month = lubridate::month(p_time))
+  ggplot(aes(y = total, x = distance)) +
   geom_point() +
   geom_smooth(se = FALSE) +
   facet_wrap(~ month)
@@ -118,12 +119,12 @@ y15 %>% #faceted by month, without outliers
 ```{r}
 #average fare by month, without outliers
 y15_month <- y15 %>%
-  mutate(month = lubridate::month(pickup_time))
+  mutate(month = lubridate::month(p_time))
 
 y15_month_ave_fare <- y15_month %>%
-  filter(total_fare > 0, total_fare <100)
+  filter(total > 0, total < 100)
   group_by(month)%>%
-  summarize(ave=mean(total_fare))
+  summarize(ave=mean(total))
 
 y15_month_ave_fare %>%
   ggplot(aes(x=month, y=ave)) +
@@ -131,12 +132,12 @@ y15_month_ave_fare %>%
   
 #average fare by day of the week, without outliers
 y15_day <- y15 %>%
-  mutate(weekday = lubridate::wday(pickup_time))
+  mutate(weekday = lubridate::wday(p_time))
 
 y15_day_ave_fare <- y15_day %>%
-  filter(total_fare > 0, total_fare <100)
+  filter(total > 0, total <100)
   group_by(weekday)%>%
-  summarize(ave=mean(total_fare))
+  summarize(ave=mean(total))
   
 y15_day_ave_fare %>%
   ggplot(aes(x=weekday, y=ave)) +
@@ -147,9 +148,9 @@ y15_hour <- y15 %>%
   mutate(hour = str_sub(y15$p_time, -9, -7))
 
 y15_hour_ave_fare <- y15_hour %>%
-  filter(total_fare > 0, total_fare <100) %>%
+  filter(total > 0, total <100) %>%
   group_by(hour) %>%
-  summarize(ave=mean(total_fare))
+  summarize(ave=mean(total))
 
 y15_hour_ave_fare %>%
   ggplot(aes(x=hour, y=ave)) +
@@ -160,7 +161,7 @@ y15_hour_ave_fare %>%
 ```{r}
 #average trip length by month, without outliers
 y15_month <- y15 %>%
-  mutate(month = lubridate::month(pickup_time))
+  mutate(month = lubridate::month(p_time))
 
 y15_month_ave_dist <- y15_month %>%
   filter(distance > 0, distance < 50)
@@ -173,7 +174,7 @@ y15_month_ave_dist %>%
 
 #average trip length by day of the week, without outliers
 y15_day <- y15 %>%
-  mutate(weekday = lubridate::wday(pickup_time))
+  mutate(weekday = lubridate::wday(p_time))
 
 y15_day_ave_dist <- y15_day %>%
   filter(distance > 0, distance < 50)
@@ -202,7 +203,7 @@ y15_hour_ave_dist %>%
 ```{r}
 #total number of taxi rides per month
 y15_month <- y15 %>%
-  mutate(month = lubridate::month(pickup_time))
+  mutate(month = lubridate::month(p_time))
 
 y15_month_tot <- y15_month %>%
   group_by(month)%>%
@@ -214,7 +215,7 @@ y15_month_tot %>%
 
 #total number of taxi rides for each day of week
 y15_day <- y15 %>%
-  mutate(weekday = lubridate::wday(pickup_time))
+  mutate(weekday = lubridate::wday(p_time))
 
 y15_day_tot <- y15_day %>%
   group_by(weekday) %>%
@@ -245,7 +246,7 @@ y15_hour_tot %>%
 **Pick-Up Locations**
 ```{r}
 y15_pickup <- y15 %>%
-  mutate(coordinates=paste(y15$pickup_long, y15$pickup_lat, 0, sep=", "))
+  mutate(coordinates=paste(y15$p_long, y15$p_lat, 0, sep=", "))
 p_coordinates <- y15_pickup$coordinates
 head(p_coordinates, 6)
 
@@ -265,7 +266,7 @@ saveXML(doc, file = "C:\\Users\\Sudeshna_Barman\\Documents\\Stat133\\Pick-Up-Loc
 **Drop-Off Locations**
 ```{r}
 y15_dropoff <- y15 %>%
-  mutate(coordinates=paste(y15$dropoff_long, y15$dropoff_lat, 0, sep=", "))
+  mutate(coordinates=paste(y15$d_long, y15$d_lat, 0, sep=", "))
 d_coordinates <- y15_dropoff$coordinates
 head(d_coordinates, 6)
 
@@ -285,10 +286,10 @@ saveXML(doc, file = "C:\\Users\\Sudeshna_Barman\\Documents\\Stat133\\Drop-Off-Lo
 **Number of Passengers**
 ```{r}
 y15_passengers <- y15 %>%
-  group_by(number_of_passengers) %>%
+  group_by(num_passengers) %>%
   summarize(tot = n())
   
 y15_passengers %>%
-  ggplot(aes(x = number_of_passengers, y = tot))
+  ggplot(aes(x = num_passengers, y = tot))
   geom_bar(stat ="identity")
 ```
