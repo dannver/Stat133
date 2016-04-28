@@ -283,6 +283,60 @@ for (i in d_coordinates) {
 saveXML(doc, file = "C:\\Users\\Sudeshna_Barman\\Documents\\Stat133\\Drop-Off-Locations.kml")
 ```
 
+To create timestamp bar:
+```{r}
+y15_timestamp <- y15 %>%
+  mutate(datetimefix=gsub("/", "-", y15$p_time)) %>%
+  mutate(datetimefix=gsub(" PM", "Z", y15_timestamp$datetimefix)) %>%
+  mutate(datetimefix=gsub(" AM", "Z", y15_timestamp$datetimefix)) %%
+  mutate(datetimefix=gsub(" ", "T", y15_timestamp$datetimefix))
+
+when <- y15_timestamp$datetimefix
+matrix=cbind(p_coordinates, when)
+
+library(XML)
+doc <- newXMLDoc()
+root <- newXMLNode("kml", namespaceDefinitions = "http://www.opengis.net/kml/2.2", doc=doc) 
+child1 <- newXMLNode("Document", parent = root)
+newXMLNode("name", "Pick Up Locations", parent = child1)
+for (i in 1:nrow(matrix)) {
+    print(child2 <- newXMLNode("Placemark", parent = child1))
+    print(child3 <- newXMLNode("Point", parent = child2))
+    print(newXMLNode("coordinates", paste(matrix[i,1]), parent = child3))
+    print(child4 <- newXMLNode("TimeStamp", parent = child2))
+    print(newXMLNode("when", paste(matrix[i,2]), parent = child4))
+}
+saveXML(doc, file = "C:\\Users\\Sudeshna_Barman\\Documents\\Stat133\\Pick-Up-Locations-2.kml")
+```
+
+To create timestamp bar with drop-off locations:
+```{r}
+y15_timestamp_d <- y15 %>%
+  mutate(datetimefix=gsub("/", "-", y15$d_time)) %>%
+  mutate(datetimefix=gsub(" PM", "Z", y15_timestamp$datetimefix)) %>%
+  mutate(datetimefix=gsub(" AM", "Z", y15_timestamp$datetimefix)) %%
+  mutate(datetimefix=gsub(" ", "T", y15_timestamp$datetimefix))
+
+head(y15_timestamp_d)
+
+when2 <- y15_timestamp_d$datetimefix
+matrix2=cbind(d_coordinates, when2)
+
+library(XML)
+doc <- newXMLDoc()
+root <- newXMLNode("kml", namespaceDefinitions = "http://www.opengis.net/kml/2.2", doc=doc) 
+child1 <- newXMLNode("Document", parent = root)
+newXMLNode("name", "Pick Up Locations", parent = child1)
+for (i in 1:nrow(matrix2)) {
+    print(child2 <- newXMLNode("Placemark", parent = child1))
+    print(child3 <- newXMLNode("Point", parent = child2))
+    print(newXMLNode("coordinates", paste(matrix[i,1]), parent = child3))
+    print(child4 <- newXMLNode("TimeStamp", parent = child2))
+    print(newXMLNode("when", paste(matrix[i,2]), parent = child4))
+}
+saveXML(doc, file = "C:\\Users\\Sudeshna_Barman\\Documents\\Stat133\\Drop-Off-Locations-2.kml")
+```
+
 **Number of Passengers**
 ```{r}
 y15_passengers <- y15 %>%
@@ -292,4 +346,5 @@ y15_passengers <- y15 %>%
 y15_passengers %>%
   ggplot(aes(x = num_passengers, y = tot))
   geom_bar(stat ="identity")
-```
+```  
+  
