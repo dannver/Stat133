@@ -24,6 +24,6 @@ for year in `seq 2009 2014`; do
 		lines=$((lines-1))
 		new="$file_clean$extension"
  		tail -$lines $file | shuf -n 20000 | cut -f 2,3,4,5,6,7,10,11,12,13,18 -d ',' > $new
-		rm $file
+		rm "$file$extension"
 	done
 done
