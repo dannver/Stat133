@@ -9,6 +9,7 @@ extension=".csv"
 
 for year in `seq 2009 2014`; do
 	for month in `seq 1 12`; do
+		echo "*******Downloading $year-$month*******"
 		if [ $month -lt 10 ]; then
 			url="$yellowpath$year/$yellow$year-0$month$extension"
 		else
@@ -22,7 +23,8 @@ for year in `seq 2009 2014`; do
 		fi
 		lines=($(wc -l "$file$extension"))
 		lines=$((lines-1))
-		new="$file_clean$extension"
+		new=$file"_clean"$extension
+		echo "*******Cleaning $file$extension*******"
  		tail -$lines "$file$extension" | shuf -n 20000 | cut -f 2,3,4,5,6,7,10,11,12,13,18 -d ',' > $new
 		rm "$file$extension"
 	done
