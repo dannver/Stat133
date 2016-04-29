@@ -19,6 +19,7 @@ for year in `seq 2009 2014`; do
 			file="$yellow$year-0$month"
 		else
 			file="$yellow$year-$month"
+		fi
 		lines=($(wc -l "$file$extension"))
 		lines=$((lines-1))
 		new="$file_clean$extension"
