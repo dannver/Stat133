@@ -11,7 +11,7 @@ dir="taxi_data/"
 extension=".csv"
 col_names="p_time,d_time,num_passengers,distance,p_lat,p_long,d_lat,d_long,payment_type,fare,total"
 
-for year in `seq 2009 2014`; do
+for year in `seq 2009 2015`; do
     for month in `seq 1 12`; do
 		if [ $month -lt 10 ]; then
 		    file="$dir$yellow$year-0$month"
