@@ -2,7 +2,7 @@
 title: "Stats 133 Final Project Code"
 author: "Siyao Ma, Dannver Wu, Sudeshna Barman"
 date: "Wednesday, April 27, 2016"
-output: 
+output:
   html_document:
     fig_height: 3
     fig_width: 5
