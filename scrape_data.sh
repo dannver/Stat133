@@ -1,8 +1,7 @@
 #!/bin/bash
 #Writted by Dannver Wu for Statistics 133 Final Group Project
 
-yellowpath="https://storage.googleapis.com/tlc-trip-data/"
-greenpath="https://storage.googleapis.com/tlc-trip-data/"
+path="https://storage.googleapis.com/tlc-trip-data/"
 yellow="yellow_tripdata_"
 green="green_tripdata_"
 dir="taxi_data/"
@@ -11,9 +10,9 @@ extension=".csv"
 year="2012"
 for month in `seq 1 12`; do
 	if [ $month -lt 10 ]; then
-	    url="$yellowpath$year/$green$year-0$month$extension"
+	    url="$path$year/$yellow$year-0$month$extension"
 	else
-	    url="$yellowpath$year/$green$year-$month$extension"
+	    url="$path$year/$yellow$year-$month$extension"
 	fi
 	wget $url
 	if [ $month -lt 10 ]; then
@@ -33,9 +32,9 @@ done
 #     for month in `seq 1 12`; do
 # 		echo "*******Downloading $year-$month*******"
 # 		if [ $month -lt 10 ]; then
-# 		    url="$yellowpath$year/$yellow$year-0$month$extension"
+# 		    url="$path$year/$yellow$year-0$month$extension"
 # 		else
-# 		    url="$yellowpath$year/$yellow$year-$month$extension"
+# 		    url="$path$year/$yellow$year-$month$extension"
 # 		fi
 # 		wget $url
 # 		if [ $month -lt 10 ]; then
@@ -55,9 +54,9 @@ done
 # year="2014"
 # for month in `seq 1 12`; do
 # 	if [ $month -lt 10 ]; then
-# 	    url="$greenpath$year/$green$year-0$month$extension"
+# 	    url="$path$year/$green$year-0$month$extension"
 # 	else
-# 	    url="$greenpath$year/$green$year-$month$extension"
+# 	    url="$path$year/$green$year-$month$extension"
 # 	fi
 # 	wget $url
 # 	if [ $month -lt 10 ]; then
@@ -76,9 +75,9 @@ done
 # year="2013"
 # for month in `seq 8 12`; do
 # 	if [ $month -lt 10 ]; then
-# 	    url="$greenpath$year/$green$year-0$month$extension"
+# 	    url="$path$year/$green$year-0$month$extension"
 # 	else
-# 	    url="$greenpath$year/$green$year-$month$extension"
+# 	    url="$path$year/$green$year-$month$extension"
 # 	fi
 # 	wget $url
 # 	if [ $month -lt 10 ]; then
