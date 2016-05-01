@@ -20,6 +20,10 @@ includeSourceDocuments()
 
 **NOTE: this is only a rough draft of the code and resulting graphs; will be refined later on**
 ```{r}
+#Dannver
+setwd('/Users/dannver/UC Berkeley/Spring 2016/Stats 133/Group Project/Stat133-Final/taxi_data')
+#Siyao
+#setwd('/Users/siyaoma/Desktop/2015/')
 col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_lat", "p_long", "d_lat", "d_long", "payment_type", "fare", "total")
 
 #yellow taxi data 12/2015

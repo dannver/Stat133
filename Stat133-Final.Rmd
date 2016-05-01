@@ -20,76 +20,81 @@ includeSourceDocuments()
 
 **Downloading and Formatting the Data**
 ```{r}
+#Dannver
+setwd('/Users/dannver/UC Berkeley/Spring 2016/Stats 133/Group Project/Stat133-Final/taxi_data/')
+#Siyao
+#setwd('/Users/siyaoma/Desktop/2015/')
+
 col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_lat", "p_long", "d_lat", "d_long", "payment_type", "fare", "total")
 
 #yellow taxi data 12/2015
-y15_12 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-12_sort.csv')
+y15_12 <- read.csv('yellow_tripdata_2015-12_clean.csv')
 names(y15_12) <- col_names
 y15_12<- y15_12 %>%
   mutate(month = lubridate::month(p_time))
 
 #yellow taxi data 11/2015
-y15_11 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-11_sort.csv')
+y15_11 <- read.csv('yellow_tripdata_2015-11_clean.csv')
 names(y15_11) <- col_names
 y15_11<- y15_11 %>%
   mutate(month = lubridate::month(p_time))
 
 #yellow taxi data 10/2015
-y15_10 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-10_sort.csv')
+y15_10 <- read.csv('yellow_tripdata_2015-10_clean.csv')
 names(y15_10) <- col_names
 y15_10<- y15_10 %>%
   mutate(month = lubridate::month(p_time))
 
 #yellow taxi data 09/2015
-y15_09 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-09_sort.csv')
+y15_09 <- read.csv('yellow_tripdata_2015-09_clean.csv')
 names(y15_09) <- col_names
 y15_09<- y15_09 %>%
   mutate(month = lubridate::month(p_time))
 
 #yellow taxi data 08/2015
-y15_08 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-08_sort.csv')
+y15_08 <- read.csv('yellow_tripdata_2015-08_clean.csv')
 names(y15_08) <- col_names
 y15_08<- y15_08 %>%
   mutate(month = lubridate::month(p_time))
 
 #yellow taxi data 07/2015
-y15_07 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-07_sort.csv')
+y15_07 <- read.csv('yellow_tripdata_2015-07_clean.csv')
 names(y15_07) <- col_names
 y15_07<- y15_07 %>%
   mutate(month = lubridate::month(p_time))
 
 #yellow taxi data 06/2015
-y15_06 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-06_sort.csv')
+y15_06 <- read.csv('yellow_tripdata_2015-06_clean.csv')
 names(y15_06) <- col_names
 y15_06<- y15_06 %>%
   mutate(month = lubridate::month(p_time))
 
 #yellow taxi data 05/2015
-y15_05 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-05_sort.csv')
+y15_05 <- read.csv('yellow_tripdata_2015-05_clean.csv')
 names(y15_05) <- col_names
 y15_05 <- y15_05 %>%
   mutate(month = lubridate::month(p_time))
 
 #yellow taxi data 04/2015
-y15_04 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-04_sort.csv')
+y15_04 <- read.csv('yellow_tripdata_2015-04_clean.csv')
 names(y15_04) <- col_names
 y15_04 <- y15_04 %>%
   mutate(month = lubridate::month(p_time))
 
 #yellow taxi data 03/2015
-y15_03 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-03_sort.csv')
+y15_03 <- read.csv('yellow_tripdata_2015-03_clean.csv')
 names(y15_03) <- col_names
 y15_03 <- y15_03 %>%
   mutate(month = lubridate::month(p_time))
 
 #yellow taxi data 02/2015
-y15_02 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-02_sort.csv')
+y15_02 <- read.csv('yellow_tripdata_2015-02_clean.csv')
 names(y15_02) <- col_names
 y15_02 <- y15_02 %>%
   mutate(month = lubridate::month(p_time))
 
 #yellow taxi data 01/2015
-y15_01 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-01_sort.csv')
+y15_01 <- read.csv('yellow_tripdata_2015-01_clean.csv')
 names(y15_01) <- col_names
 y15_01 <- y15_01 %>%
   mutate(month = lubridate::month(p_time))
