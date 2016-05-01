@@ -1,0 +1,463 @@
+---
+title: "Graphs - 2015"
+author: ""
+date: ""
+output: 
+  html_document:
+    fig_height: 6
+    fig_width: 10
+---
+<!-- Don't edit in between this line and the one below -->
+```{r include=FALSE}
+# Don't delete this chunk if you are using the DataComputing package
+library(DataComputing)
+```
+*Source file* 
+```{r, results='asis', echo=FALSE}
+includeSourceDocuments()
+```
+<!-- Don't edit the material above this line -->
+
+**Downloading and Formatting the Data**
+```{r}
+col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_lat", "p_long", "d_lat", "d_long", "payment_type", "fare", "total")
+
+#yellow taxi data 12/2015
+y15_12 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-12_clean.csv')
+names(y15_12) <- col_names
+y15_12<- y15_12 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 11/2015
+y15_11 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-11_clean.csv')
+names(y15_11) <- col_names
+y15_11<- y15_11 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 10/2015
+y15_10 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-10_clean.csv')
+names(y15_10) <- col_names
+y15_10<- y15_10 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 09/2015
+y15_09 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-09_clean.csv')
+names(y15_09) <- col_names
+y15_09<- y15_09 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 08/2015
+y15_08 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-08_clean.csv')
+names(y15_08) <- col_names
+y15_08<- y15_08 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 07/2015
+y15_07 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-07_clean.csv')
+names(y15_07) <- col_names
+y15_07<- y15_07 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 06/2015
+y15_06 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-06_clean.csv')
+names(y15_06) <- col_names
+y15_06<- y15_06 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 05/2015
+y15_05 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-05_clean.csv')
+names(y15_05) <- col_names
+y15_05 <- y15_05 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 04/2015
+y15_04 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-04_clean.csv')
+names(y15_04) <- col_names
+y15_04 <- y15_04 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 03/2015
+y15_03 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-03_clean.csv')
+names(y15_03) <- col_names
+y15_03 <- y15_03 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 02/2015
+y15_02 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-02_clean.csv')
+names(y15_02) <- col_names
+y15_02 <- y15_02 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 01/2015
+y15_01 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-01_clean.csv')
+names(y15_01) <- col_names
+y15_01 <- y15_01 %>%
+  mutate(month = lubridate::month(p_time))
+
+y15 <- rbind(y15_12, y15_11, y15_10, y15_09, y15_08, y15_07, y15_06, y15_05, y15_04, y15_03, y15_02, y15_01)
+
+y15 <- y15 %>%
+  mutate(taxi_color = "yellow") %>%
+  mutate(yday = lubridate::yday(p_time)) %>%
+  mutate(mday = lubridate::mday(p_time)) %>%
+  mutate(weekday = lubridate::wday(p_time)) %>%
+  mutate(hour = str_sub(p_time, -9, -7))
+```
+
+```{r}
+col_names <- c("p_time", "d_time", "p_lat", "p_long", "d_lat", "d_long", "num_passengers", "distance", "fare", "total", "payment_type")
+
+#green taxi data 12/2015
+g15_12 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-12_clean.csv')
+names(g15_12) <- col_names
+g15_12<- g15_12 %>%
+  mutate(month = lubridate::month(p_time))
+
+#green taxi data 11/2015
+g15_11 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-11_clean.csv')
+names(g15_11) <- col_names
+g15_11<- g15_11 %>%
+  mutate(month = lubridate::month(p_time))
+
+#green taxi data 10/2015
+g15_10 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-10_clean.csv')
+names(g15_10) <- col_names
+g15_10<- g15_10 %>%
+  mutate(month = lubridate::month(p_time))
+
+#green taxi data 09/2015
+g15_09 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-09_clean.csv')
+names(g15_09) <- col_names
+g15_09<- g15_09 %>%
+  mutate(month = lubridate::month(p_time))
+
+#green taxi data 08/2015
+g15_08 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-08_clean.csv')
+names(g15_08) <- col_names
+g15_08<- g15_08 %>%
+  mutate(month = lubridate::month(p_time))
+
+#green taxi data 07/2015
+g15_07 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-07_clean.csv')
+names(g15_07) <- col_names
+g15_07<- g15_07 %>%
+  mutate(month = lubridate::month(p_time))
+
+#green taxi data 06/2015
+g15_06 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-06_clean.csv')
+names(g15_06) <- col_names
+g15_06<- g15_06 %>%
+  mutate(month = lubridate::month(p_time))
+
+#green taxi data 05/2015
+g15_05 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-05_clean.csv')
+names(g15_05) <- col_names
+g15_05 <- g15_05 %>%
+  mutate(month = lubridate::month(p_time))
+
+#green taxi data 04/2015
+g15_04 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-04_clean.csv')
+names(g15_04) <- col_names
+g15_04 <- g15_04 %>%
+  mutate(month = lubridate::month(p_time))
+
+#green taxi data 03/2015
+g15_03 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-03_clean.csv')
+names(g15_03) <- col_names
+g15_03 <- g15_03 %>%
+  mutate(month = lubridate::month(p_time))
+
+#green taxi data 02/2015
+g15_02 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-02_clean.csv')
+names(g15_02) <- col_names
+g15_02 <- g15_02 %>%
+  mutate(month = lubridate::month(p_time))
+
+#green taxi data 01/2015
+g15_01 <- read.csv('/Users/siyaoma/Desktop/2015/green_tripdata_2015-01_clean.csv')
+names(g15_01) <- col_names
+g15_01 <- g15_01 %>%
+  mutate(month = lubridate::month(p_time))
+
+g15 <- rbind(g15_12, g15_11, g15_10, g15_09, g15_08, g15_07, g15_06, g15_05, g15_04, g15_03, g15_02, g15_01)
+
+g15 <- g15 %>%
+  mutate(taxi_color = "green") %>%
+  mutate(yday = lubridate::yday(p_time)) %>%
+  mutate(mday = lubridate::mday(p_time)) %>%
+  mutate(weekday = lubridate::wday(p_time)) %>%
+  mutate(hour = str_sub(p_time, -9, -7))
+```
+
+```{r}
+tot15 <- rbind(y15, g15)
+```
+
+**Fares**
+```{r}
+#total amount paid (including surchage, tolls, etc) v. distance traveled
+#outliers filtered out
+
+tot15 %>% #entire year
+  ggplot(aes(y = total, x = distance)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  ggtitle("Amount v. Distance - Entire Year w/ outliers")
+
+tot15 %>% #entire year
+  ggplot(aes(y = total, x = distance, color = taxi_color)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  ggtitle("Amount v. Distance - Entire Year w/ outliers (Green v. Yellow Taxi)")
+
+tot15 %>% #faceted by month
+  ggplot(aes(y = total, x = distance)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  facet_wrap(~ month) +
+  ggtitle("Amount v. Distance - Monthly w/ outliers")
+```
+
+**OUTLIERS FILTERED OUT FOR ALL SUBSEQUENT GRAPHS**
+```{r}
+tot15 <- tot15 %>%
+  filter(distance < 50, total > 0, total < 100) 
+
+tot15 %>% #entire year, without outliers
+  ggplot(aes(y = total, x = distance)) +
+  geom_point() +
+  geom_smooth(se = FALSE) + 
+  ggtitle("Amount v. Distance - Entire Year")
+
+tot15 %>% #faceted by month, without outliers
+  ggplot(aes(y = total, x = distance)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  facet_wrap(~ month) + 
+  ggtitle("Amount v. Distance - Monthly")
+```
+
+```{r}
+#average fare by month, without outliers
+tot15_month_ave_fare <- tot15 %>%
+  group_by(month)%>%
+  summarize(ave=mean(total))
+
+tot15_month_ave_fare %>%
+  ggplot(aes(x=month, y=ave)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks=seq(1,12,1)) + 
+  ggtitle("Average Fare v. Month")
+
+#average fare by day of the week, without outliers
+tot15_day_ave_fare <- tot15 %>%
+  group_by(weekday)%>%
+  summarize(ave=mean(total))
+  
+tot15_day_ave_fare %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Average Fare v. Day")
+
+tot15_day_ave_fare %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_bar(stat ="identity") +
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Average Fare v. Day")
+
+#average fare by time of day, without outliers
+tot15_hour_ave_fare <- tot15 %>%
+  group_by(hour) %>%
+  summarize(ave=mean(total))
+
+tot15_hour_ave_fare %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Average Fare v. Hour")
+
+tot15_hour_ave_fare %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Average Fare v. Hour")
+```
+
+**Trip Length**
+```{r}
+#average trip length by month, without outliers
+tot15_month_ave_dist <- tot15 %>%
+  filter(distance > 0, distance < 50) %>%
+  group_by(month)%>%
+  summarize(ave=mean(distance))
+
+tot15_month_ave_dist %>%
+  ggplot(aes(x=month, y=ave)) +
+  geom_point() +
+  geom_line() + 
+  scale_x_continuous(breaks=seq(1,12,1)) + 
+  ggtitle("Average Trip Length v. Month")
+
+tot15_month_ave_dist %>%
+  ggplot(aes(x=month, y=ave)) +
+  geom_bar(stat ="identity") + 
+  scale_x_continuous(breaks=seq(1,12,1)) + 
+  ggtitle("Average Trip Length v. Month")
+
+#average trip length by day of the week, without outliers
+tot15_day_ave_dist <- tot15 %>%
+  filter(distance > 0, distance < 50) %>%
+  group_by(weekday)%>%
+  summarize(ave=mean(distance))
+
+tot15_day_ave_dist %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Average Trip Length v. Day")
+
+tot15_day_ave_dist %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_bar(stat ="identity") + 
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Average Trip Length v. Day")
+
+#average trip length by time of day
+tot15_hour_ave_dist <- tot15 %>%
+  filter(distance > 0, distance < 50) %>%
+  group_by(hour) %>%
+  summarize(ave=mean(distance))
+
+tot15_hour_ave_dist %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_point() +
+  geom_line() + 
+  ggtitle("Average Trip Length v. Hour")
+
+tot15_hour_ave_dist %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Average Trip Length v. Hour")
+```
+
+**Number of Trips**
+```{r}
+#total number of taxi rides for each day of the year 2015
+tot15_year <- tot15 %>%
+  group_by(yday) %>%
+  summarise(tot = n())
+
+tot15_year %>%
+  ggplot(aes(y = tot, x = yday, col = yday)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Number of Trips v. Day of Year")
+
+tot15_year %>%
+  ggplot(aes(y = tot, x = yday, col = yday)) +
+  geom_line() + 
+  ggtitle("Number of Trips v. Day of Year")
+
+#total number of taxi rides per month
+tot15_month <- tot15 %>%
+  group_by(mday) %>%
+  summarise(tot = n()) 
+
+tot15_month %>%
+  ggplot(aes(y = tot, x = mday, col = mday)) +
+  geom_bar(stat ="identity") +
+  scale_x_continuous(breaks=seq(1,12,1)) + 
+  ggtitle("Number of Trips v. Month")
+
+#total number of taxi rides for each day of week
+tot15_day <- tot15 %>%
+  group_by(weekday) %>%
+  summarise(tot = n())
+
+tot15_day %>%
+  ggplot(aes(y = tot, x = weekday, col = weekday)) +
+  geom_bar(stat ="identity") +
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Number of Trips v. Day of Week")
+
+#total number of taxi rides for each day of the week (normalized)
+total <- sum(tot15_day$tot)
+tot15_day_ave <- tot15_day %>%
+  mutate(ave = tot15_day$tot/total)
+
+tot15_day_ave %>%
+  ggplot(aes(y = ave, x = weekday)) +
+  geom_bar(stat ="identity") +
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Number of Trips v. Day of Week - Normalized")
+
+#total number of taxi rides per hour
+tot15_hour <- tot15 %>%
+  group_by(hour, weekday) %>%
+  summarise(tot = n())
+
+tot15_hour %>%
+  ggplot(aes(y = tot, x = hour, fill = weekday)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Number of Trips v. Hour")
+
+#total number of taxi rides per hour (normalized) 
+tot15_hour_ave <- tot15 %>%
+  group_by(hour) %>%
+  summarise(tot = n()) %>%
+  mutate(ave = tot/sum(tot))
+
+tot15_hour_ave %>%
+  ggplot(aes(y = ave, x = hour)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Number of Trips v. Hour - Normalized")
+```
+
+**Number of Passengers**
+```{r}
+#number of passengers per day of year
+tot15_passengers_year <- tot15 %>%
+  group_by(yday) %>%
+  summarize(tot = sum(num_passengers))
+  
+tot15_passengers_year %>%
+  ggplot(aes(x = yday, y = tot)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Number of Passengers v. Day of Year")
+
+#number of passengers per month
+tot15_passengers_month <- tot15 %>%
+  group_by(month) %>%
+  summarize(tot = sum(num_passengers))
+  
+tot15_passengers_month %>%
+  ggplot(aes(x = month, y = tot)) +
+  geom_bar(stat ="identity") + 
+  scale_x_continuous(breaks=seq(1,12,1)) + 
+  ggtitle("Number of Passengers v. Month")
+
+#number of passengers per weekday
+tot15_passengers_day <- tot15 %>%
+  group_by(weekday) %>%
+  summarize(tot = sum(num_passengers))
+  
+tot15_passengers_day %>%
+  ggplot(aes(x = weekday, y = tot)) +
+  geom_bar(stat ="identity") + 
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Number of Passengers v. Day of Week")
+
+#number of passengers per hour
+tot15_passengers_hour <- tot15 %>%
+  group_by(hour) %>%
+  summarize(tot = sum(num_passengers))
+  
+tot15_passengers_hour %>%
+  ggplot(aes(x = hour, y = tot)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Number of Passengers v. Hour")
+```  
+
+
