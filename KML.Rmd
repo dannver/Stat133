@@ -1,0 +1,792 @@
+---
+title: "KML"
+author: ""
+date: ""
+output: 
+  html_document:
+    fig_height: 3
+    fig_width: 5
+---
+<!-- Don't edit in between this line and the one below -->
+```{r include=FALSE}
+# Don't delete this chunk if you are using the DataComputing package
+library(DataComputing)
+```
+*Source file* 
+```{r, results='asis', echo=FALSE}
+includeSourceDocuments()
+```
+<!-- Don't edit the material above this line -->
+
+**Downloading and Formatting the Data**
+```{r}
+col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_long", "p_lat", "d_long", "d_lat", "payment_type", "fare", "total")
+
+#yellow taxi data 12/2009
+y09_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-12_clean.csv')
+#names(y09_12) <- col_names
+y09_12<- y09_12 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 11/2009
+y09_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-11_clean.csv')
+#names(y09_11) <- col_names
+y09_11<- y09_11 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 10/2009
+y09_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-10_clean.csv')
+#names(y09_10) <- col_names
+y09_10<- y09_10 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 09/2009
+y09_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-09_clean.csv')
+#names(y09_09) <- col_names
+y09_09<- y09_09 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 08/2009
+y09_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-08_clean.csv')
+#names(y09_08) <- col_names
+y09_08<- y09_08 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 07/2009
+y09_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-07_clean.csv')
+#names(y09_07) <- col_names
+y09_07<- y09_07 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 06/2009
+y09_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-06_clean.csv')
+#names(y09_06) <- col_names
+y09_06<- y09_06 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 05/2009
+y09_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-05_clean.csv')
+#names(y09_05) <- col_names
+y09_05 <- y09_05 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 04/2009
+y09_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-04_clean.csv')
+#names(y09_04) <- col_names
+y09_04 <- y09_04 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 03/2009
+y09_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-03_clean.csv')
+#names(y09_03) <- col_names
+y09_03 <- y09_03 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 02/2009
+y09_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-02_clean.csv')
+#names(y09_02) <- col_names
+y09_02 <- y09_02 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 01/2009
+y09_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-01_clean.csv')
+#names(y09_01) <- col_names
+y09_01 <- y09_01 %>%
+  mutate(month = lubridate::month(p_time))
+
+y09 <- rbind(y09_12, y09_11, y09_10, y09_09, y09_08, y09_07, y09_06, y09_05, y09_04, y09_03, y09_02, y09_01)
+
+```
+
+```{r}
+col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_long", "p_lat", "d_long", "d_lat", "payment_type", "fare", "total")
+
+#yellow taxi data 12/2010
+y10_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-12_clean.csv')
+#names(y10_12) <- col_names
+y10_12<- y10_12 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 11/2010
+y10_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-11_clean.csv')
+#names(y10_11) <- col_names
+y10_11<- y10_11 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 10/2010
+y10_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-10_clean.csv')
+#names(y10_10) <- col_names
+y10_10<- y10_10 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 09/2010
+y10_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-09_clean.csv')
+#names(y10_09) <- col_names
+y10_09<- y10_09 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 08/2010
+y10_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-08_clean.csv')
+#names(y10_08) <- col_names
+y10_08<- y10_08 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 07/2010
+y10_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-07_clean.csv')
+#names(y10_07) <- col_names
+y10_07<- y10_07 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 06/2010
+y10_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-06_clean.csv')
+#names(y10_06) <- col_names
+y10_06<- y10_06 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 05/2010
+y10_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-05_clean.csv')
+#names(y10_05) <- col_names
+y10_05 <- y10_05 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 04/2010
+y10_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-04_clean.csv')
+#names(y10_04) <- col_names
+y10_04 <- y10_04 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 03/2010
+y10_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-03_clean.csv')
+#names(y10_03) <- col_names
+y10_03 <- y10_03 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 02/2010
+y10_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-02_clean.csv')
+#names(y10_02) <- col_names
+y10_02 <- y10_02 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 01/2010
+y10_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-01_clean.csv')
+#names(y10_01) <- col_names
+y10_01 <- y10_01 %>%
+  mutate(month = lubridate::month(p_time))
+
+y10 <- rbind(y10_12, y10_11, y10_10, y10_09, y10_08, y10_07, y10_06, y10_05, y10_04, y10_03, y10_02, y10_01)
+
+```
+
+
+```{r}
+col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_long", "p_lat", "d_long", "d_lat", "payment_type", "fare", "total")
+
+#yellow taxi data 12/2011
+y11_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-12_clean.csv')
+#names(y11_12) <- col_names
+y11_12<- y11_12 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 11/2011
+y11_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-11_clean.csv')
+#names(y11_11) <- col_names
+y11_11<- y11_11 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 10/2011
+y11_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-10_clean.csv')
+#names(y11_10) <- col_names
+y11_10<- y11_10 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 09/2011
+y11_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-09_clean.csv')
+#names(y11_09) <- col_names
+y11_09<- y11_09 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 08/2011
+y11_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-08_clean.csv')
+#names(y11_08) <- col_names
+y11_08<- y11_08 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 07/2011
+y11_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-07_clean.csv')
+#names(y11_07) <- col_names
+y11_07<- y11_07 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 06/2011
+y11_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-06_clean.csv')
+#names(y11_06) <- col_names
+y11_06<- y11_06 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 05/2011
+y11_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-05_clean.csv')
+#names(y11_05) <- col_names
+y11_05 <- y11_05 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 04/2011
+y11_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-04_clean.csv')
+#names(y11_04) <- col_names
+y11_04 <- y11_04 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 03/2011
+y11_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-03_clean.csv')
+#names(y11_03) <- col_names
+y11_03 <- y11_03 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 02/2011
+y11_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-02_clean.csv')
+#names(y11_02) <- col_names
+y11_02 <- y11_02 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 01/2011
+y11_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-01_clean.csv')
+#names(y11_01) <- col_names
+y11_01 <- y11_01 %>%
+  mutate(month = lubridate::month(p_time))
+
+y11 <- rbind(y11_12, y11_11, y11_10, y11_09, y11_08, y11_07, y11_06, y11_05, y11_04, y11_03, y11_02, y11_01)
+
+```
+
+
+```{r}
+col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_long", "p_lat", "d_long", "d_lat", "payment_type", "fare", "total")
+
+#yellow taxi data 12/2012
+y12_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-12_clean.csv')
+#names(y12_12) <- col_names
+y12_12<- y12_12 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 11/2012
+y12_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-11_clean.csv')
+#names(y12_11) <- col_names
+y12_11<- y12_11 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 10/2012
+y12_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-10_clean.csv')
+#names(y12_10) <- col_names
+y12_10<- y12_10 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 09/2012
+y12_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-09_clean.csv')
+#names(y12_09) <- col_names
+y12_09<- y12_09 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 08/2012
+y12_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-08_clean.csv')
+#names(y12_08) <- col_names
+y12_08<- y12_08 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 07/2012
+y12_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-07_clean.csv')
+#names(y12_07) <- col_names
+y12_07<- y12_07 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 06/2012
+y12_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-06_clean.csv')
+#names(y12_06) <- col_names
+y12_06<- y12_06 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 05/2012
+y12_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-05_clean.csv')
+#names(y12_05) <- col_names
+y12_05 <- y12_05 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 04/2012
+y12_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-04_clean.csv')
+#names(y12_04) <- col_names
+y12_04 <- y12_04 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 03/2012
+y12_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-03_clean.csv')
+#names(y12_03) <- col_names
+y12_03 <- y12_03 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 02/2012
+y12_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-02_clean.csv')
+#names(y12_02) <- col_names
+y12_02 <- y12_02 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 01/2012
+y12_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-01_clean.csv')
+#names(y12_01) <- col_names
+y12_01 <- y12_01 %>%
+  mutate(month = lubridate::month(p_time))
+
+y12 <- rbind(y12_12, y12_11, y12_10, y12_09, y12_08, y12_07, y12_06, y12_05, y12_04, y12_03, y12_02, y12_01)
+
+```
+
+
+```{r}
+col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_long", "p_lat", "d_long", "d_lat", "payment_type", "fare", "total")
+
+#yellow taxi data 12/2013
+y13_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-12_clean.csv')
+#names(y13_12) <- col_names
+y13_12<- y13_12 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 11/2013
+y13_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-11_clean.csv')
+#names(y13_11) <- col_names
+y13_11<- y13_11 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 10/2013
+y13_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-10_clean.csv')
+#names(y13_10) <- col_names
+y13_10<- y13_10 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 09/2013
+y13_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-09_clean.csv')
+#names(y13_09) <- col_names
+y13_09<- y13_09 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 08/2013
+y13_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-08_clean.csv')
+#names(y13_08) <- col_names
+y13_08<- y13_08 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 07/2013
+y13_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-07_clean.csv')
+#names(y13_07) <- col_names
+y13_07<- y13_07 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 06/2013
+y13_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-06_clean.csv')
+#names(y13_06) <- col_names
+y13_06<- y13_06 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 05/2013
+y13_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-05_clean.csv')
+#names(y13_05) <- col_names
+y13_05 <- y13_05 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 04/2013
+y13_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-04_clean.csv')
+#names(y13_04) <- col_names
+y13_04 <- y13_04 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 03/2013
+y13_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-03_clean.csv')
+#names(y13_03) <- col_names
+y13_03 <- y13_03 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 02/2013
+y13_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-02_clean.csv')
+#names(y13_02) <- col_names
+y13_02 <- y13_02 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 01/2013
+y13_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-01_clean.csv')
+#names(y13_01) <- col_names
+y13_01 <- y13_01 %>%
+  mutate(month = lubridate::month(p_time))
+
+y13 <- rbind(y13_12, y13_11, y13_10, y13_09, y13_08, y13_07, y13_06, y13_05, y13_04, y13_03, y13_02, y13_01)
+
+```
+
+
+```{r}
+col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_long", "p_lat", "d_long", "d_lat", "payment_type", "fare", "total")
+
+#yellow taxi data 12/2014
+y14_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-12_clean.csv')
+names(y14_12) <- col_names
+y14_12<- y14_12 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 11/2014
+y14_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-11_clean.csv')
+names(y14_11) <- col_names
+y14_11<- y14_11 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 10/2014
+y14_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-10_clean.csv')
+names(y14_10) <- col_names
+y14_10<- y14_10 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 09/2014
+y14_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-09_clean.csv')
+names(y14_09) <- col_names
+y14_09<- y14_09 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 08/2014
+y14_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-08_clean.csv')
+names(y14_08) <- col_names
+y14_08<- y14_08 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 07/2014
+y14_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-07_clean.csv')
+names(y14_07) <- col_names
+y14_07<- y14_07 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 06/2014
+y14_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-06_clean.csv')
+names(y14_06) <- col_names
+y14_06<- y14_06 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 05/2014
+y14_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-05_clean.csv')
+names(y14_05) <- col_names
+y14_05 <- y14_05 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 04/2014
+y14_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-04_clean.csv')
+names(y14_04) <- col_names
+y14_04 <- y14_04 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 03/2014
+y14_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-03_clean.csv')
+names(y14_03) <- col_names
+y14_03 <- y14_03 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 02/2014
+y14_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-02_clean.csv')
+names(y14_02) <- col_names
+y14_02 <- y14_02 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 01/2014
+y14_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-01_clean.csv')
+names(y14_01) <- col_names
+y14_01 <- y14_01 %>%
+  mutate(month = lubridate::month(p_time))
+
+y14 <- rbind(y14_12, y14_11, y14_10, y14_09, y14_08, y14_07, y14_06, y14_05, y14_04, y14_03, y14_02, y14_01)
+
+```
+
+
+```{r}
+col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_lat", "p_long", "d_lat", "d_long", "payment_type", "fare", "total")
+
+#yellow taxi data 12/2015
+y15_12 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-12_clean.csv')
+names(y15_12) <- col_names
+y15_12<- y15_12 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 11/2015
+y15_11 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-11_clean.csv')
+names(y15_11) <- col_names
+y15_11<- y15_11 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 10/2015
+y15_10 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-10_clean.csv')
+names(y15_10) <- col_names
+y15_10<- y15_10 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 09/2015
+y15_09 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-09_clean.csv')
+names(y15_09) <- col_names
+y15_09<- y15_09 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 08/2015
+y15_08 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-08_clean.csv')
+names(y15_08) <- col_names
+y15_08<- y15_08 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 07/2015
+y15_07 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-07_clean.csv')
+names(y15_07) <- col_names
+y15_07<- y15_07 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 06/2015
+y15_06 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-06_clean.csv')
+names(y15_06) <- col_names
+y15_06<- y15_06 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 05/2015
+y15_05 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-05_clean.csv')
+names(y15_05) <- col_names
+y15_05 <- y15_05 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 04/2015
+y15_04 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-04_clean.csv')
+names(y15_04) <- col_names
+y15_04 <- y15_04 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 03/2015
+y15_03 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-03_clean.csv')
+names(y15_03) <- col_names
+y15_03 <- y15_03 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 02/2015
+y15_02 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-02_clean.csv')
+names(y15_02) <- col_names
+y15_02 <- y15_02 %>%
+  mutate(month = lubridate::month(p_time))
+
+#yellow taxi data 01/2015
+y15_01 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-01_clean.csv')
+names(y15_01) <- col_names
+y15_01 <- y15_01 %>%
+  mutate(month = lubridate::month(p_time))
+
+y15 <- rbind(y15_12, y15_11, y15_10, y15_09, y15_08, y15_07, y15_06, y15_05, y15_04, y15_03, y15_02, y15_01)
+
+```
+
+
+**Isolate lat and long**
+```{r}
+y15 <- y15 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat15 <- y15 %>%
+  select(p_lat)
+lat15 <- lat15[, 1]
+
+long15 <- y15 %>%
+  select(p_long)
+long15 <- long15[, 1]
+
+y14 <- y14 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat14 <- y14 %>%
+  select(p_lat)
+lat14 <- lat14[, 1]
+
+long14 <- y14 %>%
+  select(p_long)
+long14 <- long14[, 1]
+
+y13 <- y13 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat13 <- y13 %>%
+  select(p_lat)
+lat13 <- lat13[, 1]
+
+long13 <- y13 %>%
+  select(p_long)
+long13 <- long13[, 1]
+
+y12 <- y12 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat12 <- y12 %>%
+  select(p_lat)
+lat12 <- lat12[, 1]
+
+long12 <- y12 %>%
+  select(p_long)
+long12 <- long12[, 1]
+
+y11 <- y11 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat11 <- y11 %>%
+  select(p_lat)
+lat11 <- lat11[, 1]
+
+long11 <- y11 %>%
+  select(p_long)
+long11 <- long11[, 1]
+
+y10 <- y10 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat10 <- y10 %>%
+  select(p_lat)
+lat10 <- lat10[, 1]
+
+long10 <- y10 %>%
+  select(p_long)
+long10 <- long10[, 1]
+
+y09 <- y09 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat09 <- y09 %>%
+  select(p_lat)
+lat09 <- lat09[, 1]
+
+long09 <- y09 %>%
+  select(p_long)
+long09 <- long09[, 1]
+```
+
+```{r}
+rand <- sample(1:240000, 10000, replace=F)
+
+
+library(XML)
+doc <- newXMLDoc()
+root <- newXMLNode(name = "kml", namespaceDefinitions = "http://www.opengis.net/kml/2.2", doc = doc)
+d <- newXMLNode(name = "Document", parent = root)
+nm <- newXMLNode(name = "name", "Taxi", parent = d)
+description <- newXMLNode(name = "description", "Taxi Rides in  NYC, 2009-2015", parent = d)
+
+datetime <- as.character(y15$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat15[i],",", long15[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+saveXML(doc, "~/Desktop/taxi_2015.kml")
+```
+
+```{r}
+rand <- sample(1:240000, 100, replace=F)
+
+
+library(XML)
+doc <- newXMLDoc()
+root <- newXMLNode(name = "kml", namespaceDefinitions = "http://www.opengis.net/kml/2.2", doc = doc)
+d <- newXMLNode(name = "Document", parent = root)
+nm <- newXMLNode(name = "name", "Taxi", parent = d)
+description <- newXMLNode(name = "description", "Taxi Rides in  NYC, 2009-2015", parent = d)
+
+datetime <- as.character(y15$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat15[i],",", long15[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+datetime <- as.character(y14$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat14[i],",", long14[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+datetime <- as.character(y13$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat13[i],",", long13[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+datetime <- as.character(y12$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat12[i],",", long12[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+datetime <- as.character(y11$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat11[i],",", long11[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+datetime <- as.character(y10$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat10[i],",", long10[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+
+datetime <- as.character(y09$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat09[i],",", long09[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+saveXML(doc, "~/Desktop/taxi_all.kml")
+```
+
