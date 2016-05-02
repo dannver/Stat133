@@ -1,11 +1,11 @@
 ---
-title: "Final Project Code"
-author: "Siyao Ma"
+title: "Stats 133 Final Project Code"
+author: "Siyao Ma, Dannver Wu, Sudeshna Barman"
 date: ""
 output: 
   html_document:
-    fig_height: 6
-    fig_width: 10
+    fig_height: 3
+    fig_width: 5
 ---
 <!-- Don't edit in between this line and the one below -->
 ```{r include=FALSE}
@@ -18,189 +18,803 @@ includeSourceDocuments()
 ```
 <!-- Don't edit the material above this line -->
 
-**NOTE: this is only a rough draft of the code and resulting graphs; will be refined later on**
-```{r}
-#Dannver
-setwd('/Users/dannver/UC Berkeley/Spring 2016/Stats 133/Group Project/Stat133-Final/taxi_data')
-#Siyao
-#setwd('/Users/siyaoma/Desktop/2015/')
-col_names <- c("p_time", "d_time", "num_passengers", "distance", "p_lat", "p_long", "d_lat", "d_long", "payment_type", "fare", "total")
 
+**Downloading and Formatting the Data**
+```{r}
+#2009
+
+#yellow taxi data 12/2009
+y09_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-12_clean.csv')
+
+#yellow taxi data 11/2009
+y09_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-11_clean.csv')
+
+#yellow taxi data 10/2009
+y09_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-10_clean.csv')
+
+#yellow taxi data 09/2009
+y09_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-09_clean.csv')
+
+#yellow taxi data 08/2009
+y09_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-08_clean.csv')
+
+#yellow taxi data 07/2009
+y09_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-07_clean.csv')
+
+#yellow taxi data 06/2009
+y09_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-06_clean.csv')
+
+#yellow taxi data 05/2009
+y09_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-05_clean.csv')
+
+#yellow taxi data 04/2009
+y09_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-04_clean.csv')
+
+#yellow taxi data 03/2009
+y09_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-03_clean.csv')
+
+#yellow taxi data 02/2009
+y09_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-02_clean.csv')
+
+#yellow taxi data 01/2009
+y09_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2009-01_clean.csv')
+
+
+y09 <- rbind(y09_12, y09_11, y09_10, y09_09, y09_08, y09_07, y09_06, y09_05, y09_04, y09_03, y09_02, y09_01)
+
+y09 <- y09 %>%
+  mutate(year = 2009) %>%
+  mutate(month = lubridate::month(p_time)) %>%
+  mutate(yday = lubridate::yday(p_time)) %>%
+  mutate(mday = lubridate::mday(p_time)) %>%
+  mutate(weekday = lubridate::wday(p_time)) %>%
+  mutate(hour = str_sub(p_time, -9, -7))
+```
+
+
+```{r}
+#2010
+
+#yellow taxi data 12/2010
+y10_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-12_clean.csv')
+
+#yellow taxi data 11/2010
+y10_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-11_clean.csv')
+
+#yellow taxi data 10/2010
+y10_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-10_clean.csv')
+
+#yellow taxi data 09/2010
+y10_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-09_clean.csv')
+
+#yellow taxi data 08/2010
+y10_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-08_clean.csv')
+
+#yellow taxi data 07/2010
+y10_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-07_clean.csv')
+
+#yellow taxi data 06/2010
+y10_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-06_clean.csv')
+
+#yellow taxi data 05/2010
+y10_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-05_clean.csv')
+
+#yellow taxi data 04/2010
+y10_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-04_clean.csv')
+
+#yellow taxi data 03/2010
+y10_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-03_clean.csv')
+
+#yellow taxi data 02/2010
+y10_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-02_clean.csv')
+
+#yellow taxi data 01/2010
+y10_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2010-01_clean.csv')
+
+y10 <- rbind(y10_12, y10_11, y10_10, y10_09, y10_08, y10_07, y10_06, y10_05, y10_04, y10_03, y10_02, y10_01)
+
+y10 <- y10 %>%
+  mutate(year = 2010) %>%
+  mutate(month = lubridate::month(p_time)) %>%
+  mutate(yday = lubridate::yday(p_time)) %>%
+  mutate(mday = lubridate::mday(p_time)) %>%
+  mutate(weekday = lubridate::wday(p_time)) %>%
+  mutate(hour = str_sub(p_time, -9, -7))
+```
+
+
+```{r}
+#2011
+
+#yellow taxi data 12/2011
+y11_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-12_clean.csv')
+
+#yellow taxi data 11/2011
+y11_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-11_clean.csv')
+
+#yellow taxi data 10/2011
+y11_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-10_clean.csv')
+
+#yellow taxi data 09/2011
+y11_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-09_clean.csv')
+
+#yellow taxi data 08/2011
+y11_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-08_clean.csv')
+
+#yellow taxi data 07/2011
+y11_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-07_clean.csv')
+
+#yellow taxi data 06/2011
+y11_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-06_clean.csv')
+
+#yellow taxi data 05/2011
+y11_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-05_clean.csv')
+
+#yellow taxi data 04/2011
+y11_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-04_clean.csv')
+
+#yellow taxi data 03/2011
+y11_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-03_clean.csv')
+
+#yellow taxi data 02/2011
+y11_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-02_clean.csv')
+
+#yellow taxi data 01/2011
+y11_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2011-01_clean.csv')
+
+y11 <- rbind(y11_12, y11_11, y11_10, y11_09, y11_08, y11_07, y11_06, y11_05, y11_04, y11_03, y11_02, y11_01)
+
+y11 <- y11 %>%
+  mutate(year = 2011) %>%
+  mutate(month = lubridate::month(p_time)) %>%
+  mutate(yday = lubridate::yday(p_time)) %>%
+  mutate(mday = lubridate::mday(p_time)) %>%
+  mutate(weekday = lubridate::wday(p_time)) %>%
+  mutate(hour = str_sub(p_time, -9, -7))
+```
+
+
+```{r}
+#2012
+
+#yellow taxi data 12/2012
+y12_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-12_clean.csv')
+
+#yellow taxi data 11/2012
+y12_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-11_clean.csv')
+
+#yellow taxi data 10/2012
+y12_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-10_clean.csv')
+
+#yellow taxi data 09/2012
+y12_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-09_clean.csv')
+
+#yellow taxi data 08/2012
+y12_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-08_clean.csv')
+
+#yellow taxi data 07/2012
+y12_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-07_clean.csv')
+
+#yellow taxi data 06/2012
+y12_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-06_clean.csv')
+
+#yellow taxi data 05/2012
+y12_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-05_clean.csv')
+
+#yellow taxi data 04/2012
+y12_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-04_clean.csv')
+
+#yellow taxi data 03/2012
+y12_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-03_clean.csv')
+
+#yellow taxi data 02/2012
+y12_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-02_clean.csv')
+
+#yellow taxi data 01/2012
+y12_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2012-01_clean.csv')
+
+y12 <- rbind(y12_12, y12_11, y12_10, y12_09, y12_08, y12_07, y12_06, y12_05, y12_04, y12_03, y12_02, y12_01)
+
+y12 <- y12 %>%
+  mutate(year = 2012) %>%
+  mutate(month = lubridate::month(p_time)) %>%
+  mutate(yday = lubridate::yday(p_time)) %>%
+  mutate(mday = lubridate::mday(p_time)) %>%
+  mutate(weekday = lubridate::wday(p_time)) %>%
+  mutate(hour = str_sub(p_time, -9, -7))
+```
+
+
+```{r}
+#2013
+
+#yellow taxi data 12/2013
+y13_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-12_clean.csv')
+
+#yellow taxi data 11/2013
+y13_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-11_clean.csv')
+
+#yellow taxi data 10/2013
+y13_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-10_clean.csv')
+
+#yellow taxi data 09/2013
+y13_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-09_clean.csv')
+
+#yellow taxi data 08/2013
+y13_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-08_clean.csv')
+
+#yellow taxi data 07/2013
+y13_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-07_clean.csv')
+
+#yellow taxi data 06/2013
+y13_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-06_clean.csv')
+
+#yellow taxi data 05/2013
+y13_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-05_clean.csv')
+
+#yellow taxi data 04/2013
+y13_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-04_clean.csv')
+
+#yellow taxi data 03/2013
+y13_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-03_clean.csv')
+
+#yellow taxi data 02/2013
+y13_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-02_clean.csv')
+
+#yellow taxi data 01/2013
+y13_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2013-01_clean.csv')
+
+y13 <- rbind(y13_12, y13_11, y13_10, y13_09, y13_08, y13_07, y13_06, y13_05, y13_04, y13_03, y13_02, y13_01)
+
+y13 <- y13 %>%
+  mutate(year = 2013) %>%
+  mutate(month = lubridate::month(p_time)) %>%
+  mutate(yday = lubridate::yday(p_time)) %>%
+  mutate(mday = lubridate::mday(p_time)) %>%
+  mutate(weekday = lubridate::wday(p_time)) %>%
+  mutate(hour = str_sub(p_time, -9, -7))
+```
+
+```{r}
+#2014
+
+#yellow taxi data 12/2014
+y14_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-12_clean.csv')
+
+#yellow taxi data 11/2014
+y14_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-11_clean.csv')
+
+#yellow taxi data 10/2014
+y14_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-10_clean.csv')
+
+#yellow taxi data 09/2014
+y14_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-09_clean.csv')
+
+#yellow taxi data 08/2014
+y14_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-08_clean.csv')
+
+#yellow taxi data 07/2014
+y14_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-07_clean.csv')
+
+#yellow taxi data 06/2014
+y14_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-06_clean.csv')
+
+#yellow taxi data 05/2014
+y14_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-05_clean.csv')
+
+#yellow taxi data 04/2014
+y14_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-04_clean.csv')
+
+#yellow taxi data 03/2014
+y14_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-03_clean.csv')
+
+#yellow taxi data 02/2014
+y14_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-02_clean.csv')
+
+#yellow taxi data 01/2014
+y14_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2014-01_clean.csv')
+
+y14 <- rbind(y14_12, y14_11, y14_10, y14_09, y14_08, y14_07, y14_06, y14_05, y14_04, y14_03, y14_02, y14_01)
+
+y14 <- y14 %>%
+  mutate(year = 2014) %>%
+  mutate(month = lubridate::month(p_time)) %>%
+  mutate(yday = lubridate::yday(p_time)) %>%
+  mutate(mday = lubridate::mday(p_time)) %>%
+  mutate(weekday = lubridate::wday(p_time)) %>%
+  mutate(hour = str_sub(p_time, -9, -7))
+```
+
+
+```{r}
 #yellow taxi data 12/2015
-y15_12 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-12_sort.csv')
-names(y15_12) <- col_names
-y15_12<- y15_12 %>%
-  mutate(month = lubridate::month(p_time))
+y15_12 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-12_clean.csv')
 
 #yellow taxi data 11/2015
-y15_11 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-11_sort.csv')
-names(y15_11) <- col_names
-y15_11<- y15_11 %>%
-  mutate(month = lubridate::month(p_time))
+y15_11 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-11_clean.csv')
 
 #yellow taxi data 10/2015
-y15_10 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-10_sort.csv')
-names(y15_10) <- col_names
-y15_10<- y15_10 %>%
-  mutate(month = lubridate::month(p_time))
+y15_10 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-10_clean.csv')
 
 #yellow taxi data 09/2015
-y15_09 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-09_sort.csv')
-names(y15_09) <- col_names
-y15_09<- y15_09 %>%
-  mutate(month = lubridate::month(p_time))
+y15_09 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-09_clean.csv')
 
 #yellow taxi data 08/2015
-y15_08 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-08_sort.csv')
-names(y15_08) <- col_names
-y15_08<- y15_08 %>%
-  mutate(month = lubridate::month(p_time))
+y15_08 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-08_clean.csv')
 
 #yellow taxi data 07/2015
-y15_07 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-07_sort.csv')
-names(y15_07) <- col_names
-y15_07<- y15_07 %>%
-  mutate(month = lubridate::month(p_time))
+y15_07 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-07_clean.csv')
 
 #yellow taxi data 06/2015
-y15_06 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-06_sort.csv')
-names(y15_06) <- col_names
-y15_06<- y15_06 %>%
-  mutate(month = lubridate::month(p_time))
+y15_06 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-06_clean.csv')
 
 #yellow taxi data 05/2015
-y15_05 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-05_sort.csv')
-names(y15_05) <- col_names
-y15_05 <- y15_05 %>%
-  mutate(month = lubridate::month(p_time))
+y15_05 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-05_clean.csv') 
 
 #yellow taxi data 04/2015
-y15_04 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-04_sort.csv')
-names(y15_04) <- col_names
-y15_04 <- y15_04 %>%
-  mutate(month = lubridate::month(p_time))
+y15_04 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-04_clean.csv') 
 
 #yellow taxi data 03/2015
-y15_03 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-03_sort.csv')
-names(y15_03) <- col_names
-y15_03 <- y15_03 %>%
-  mutate(month = lubridate::month(p_time))
+y15_03 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-03_clean.csv') 
 
 #yellow taxi data 02/2015
-y15_02 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-02_sort.csv')
-names(y15_02) <- col_names
-y15_02 <- y15_02 %>%
-  mutate(month = lubridate::month(p_time))
+y15_02 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-02_clean.csv') 
 
 #yellow taxi data 01/2015
-y15_01 <- read.csv('/Users/siyaoma/Desktop/2015/yellow_tripdata_2015-01_sort.csv')
-names(y15_01) <- col_names
-y15_01 <- y15_01 %>%
-  mutate(month = lubridate::month(p_time))
+y15_01 <- read.csv('/Users/siyaoma/Desktop/Stats133 Project/Stat133-Final/taxi_data/yellow_tripdata_2015-01_clean.csv') 
 
 y15 <- rbind(y15_12, y15_11, y15_10, y15_09, y15_08, y15_07, y15_06, y15_05, y15_04, y15_03, y15_02, y15_01)
+
+y15 <- y15 %>%
+  mutate(year = 2015) %>%
+  mutate(month = lubridate::month(p_time)) %>%
+  mutate(yday = lubridate::yday(p_time)) %>%
+  mutate(mday = lubridate::mday(p_time)) %>%
+  mutate(weekday = lubridate::wday(p_time)) %>%
+  mutate(hour = str_sub(p_time, -9, -7))
 ```
 
+```{r}
+tot <- Reduce(function(x, y) merge(x, y, all=TRUE), list(y15, y14, y13, y12, y11, y10, y09))
+```
+
+**OUTLIERS FILTERED OUT FOR ALL SUBSEQUENT GRAPHS**
+```{r}
+tot <- tot %>%
+  filter(distance < 50, total > 0, total < 100) 
+```
+
+**Fares**
 ```{r}
 #total amount paid (including surchage, tolls, etc) v. distance traveled
-#will probably filter out outliers 
 
-y15 %>% #entire year
-  filter(total > 0) %>%
-  ggplot(aes(y = total, x = distance)) +
-  geom_point() +
-  geom_smooth(se = FALSE) 
-
-y15 %>% #faceted by month
-  filter(total > 0) %>%
+tot %>% #all years
   ggplot(aes(y = total, x = distance)) +
   geom_point() +
   geom_smooth(se = FALSE) +
-  facet_wrap(~ month)
+  ggtitle("Amount v. Distance - All Years")
 
-y15 %>% #entire year, without outliers
-  filter(distance < 50, total > 0) %>%
-  ggplot(aes(y = total, x = distance)) +
-  geom_point() +
-  geom_smooth(se = FALSE) 
-
-y15 %>% #faceted by month, without outliers
-  filter(distance < 50, total > 0) %>%
+tot %>% #faceted by year
   ggplot(aes(y = total, x = distance)) +
   geom_point() +
   geom_smooth(se = FALSE) +
-  facet_wrap(~ month)
+  facet_wrap(~ year) +
+  ggtitle("Amount v. Distance - Yearly")
+
+tot %>% #faceted by month
+  ggplot(aes(y = total, x = distance)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  facet_wrap(~ month) +
+  ggtitle("Amount v. Distance - Monthly")
 ```
 
 ```{r}
-#total number of taxi rides v. day of week
-y15_day <- y15 %>%
-  mutate(weekday = lubridate::wday(p_time))
+#average fare by month
+tot_month_ave_fare <- tot %>%
+  group_by(month)%>%
+  summarize(ave=mean(total))
 
-y15_day <- y15_day %>%
-  group_by(weekday) %>%
-  summarise(tot = n())
+tot_month_ave_fare %>%
+  ggplot(aes(x=month, y=ave)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks=seq(1,12,1)) + 
+  ggtitle("Average Fare v. Month")
 
-ggplot(y15_day, aes(y = tot, x = weekday, col = weekday)) +
-  geom_bar(stat ="identity")
+#average fare by day of the week
+tot_day_ave_fare <- tot %>%
+  group_by(weekday)%>%
+  summarize(ave=mean(total))
+  
+tot_day_ave_fare %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Average Fare v. Day")
 
-#total number of taxi rides v. day of month
-#NOTE have to account for the fact that not all months have the same amount of days
-y15_month <- y15 %>%
-  mutate(mday = lubridate::mday(p_time))
+tot_day_ave_fare %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_bar(stat ="identity") +
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Average Fare v. Day")
 
-y15_month <- y15_month %>%
-  group_by(mday) %>%
-  summarise(tot = n())
+#average fare by time of day
+tot_hour_ave_fare <- tot %>%
+  group_by(hour) %>%
+  summarize(ave=mean(total))
 
-ggplot(y15_month, aes(y = tot, x = mday, col = mday)) +
-  geom_bar(stat ="identity")
+tot_hour_ave_fare %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Average Fare v. Hour")
 
-#total number of taxi rides v. day of year
-y15_year <- y15 %>%
-  mutate(yday = lubridate::yday(p_time))
+tot_hour_ave_fare %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Average Fare v. Hour")
+```
 
-y15_year <- y15_year %>%
+**Trip Length**
+```{r}
+#average trip length by month
+tot_month_ave_dist <- tot %>%
+  filter(distance > 0, distance < 50) %>%
+  group_by(month)%>%
+  summarize(ave=mean(distance))
+
+tot_month_ave_dist %>%
+  ggplot(aes(x=month, y=ave)) +
+  geom_point() +
+  geom_line() + 
+  scale_x_continuous(breaks=seq(1,12,1)) + 
+  ggtitle("Average Trip Length v. Month")
+
+tot_month_ave_dist %>%
+  ggplot(aes(x=month, y=ave)) +
+  geom_bar(stat ="identity") + 
+  scale_x_continuous(breaks=seq(1,12,1)) + 
+  ggtitle("Average Trip Length v. Month")
+
+#average trip length by day of the week
+tot_day_ave_dist <- tot %>%
+  filter(distance > 0, distance < 50) %>%
+  group_by(weekday)%>%
+  summarize(ave=mean(distance))
+
+tot_day_ave_dist %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Average Trip Length v. Day")
+
+tot_day_ave_dist %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_bar(stat ="identity") + 
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Average Trip Length v. Day")
+
+#average trip length by time of day
+tot_hour_ave_dist <- tot %>%
+  filter(distance > 0, distance < 50) %>%
+  group_by(hour) %>%
+  summarize(ave=mean(distance))
+
+tot_hour_ave_dist %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_point() +
+  geom_line() + 
+  ggtitle("Average Trip Length v. Hour")
+
+tot_hour_ave_dist %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Average Trip Length v. Hour")
+```
+
+**Number of Trips**
+```{r}
+#total number of taxi rides for each day of the year
+tot_year <- tot %>%
   group_by(yday) %>%
   summarise(tot = n())
 
-ggplot(y15_year, aes(y = tot, x = yday, col = yday)) +
-  geom_bar(stat ="identity")
+tot_year %>%
+  ggplot(aes(y = tot, x = yday, col = yday)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Number of Trips v. Day of Year")
 
-ggplot(y15_year, aes(y = tot, x = yday, col = yday)) +
-  geom_line()
-```
+tot_year %>%
+  ggplot(aes(y = tot, x = yday, col = yday)) +
+  geom_line() + 
+  ggtitle("Number of Trips v. Day of Year")
 
-```{r}
-#payment type (undetermined what each number stands for...)
-y15_pay <- y15 %>%
-  group_by(payment_type) %>%
+#total number of taxi rides per month
+tot_month <- tot %>%
+  group_by(mday) %>%
+  summarise(tot = n()) 
+
+tot_month %>%
+  ggplot(aes(y = tot, x = mday, col = mday)) +
+  geom_bar(stat ="identity") +
+  scale_x_continuous(breaks=seq(1,12,1)) + 
+  ggtitle("Number of Trips v. Month")
+
+#total number of taxi rides for each day of week
+tot_day <- tot %>%
+  group_by(weekday) %>%
   summarise(tot = n())
 
-ggplot(y15_pay, aes(y = tot, x = payment_type)) +
-  geom_bar(stat ="identity")
+tot_day %>%
+  ggplot(aes(y = tot, x = weekday, col = weekday)) +
+  geom_bar(stat ="identity") +
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Number of Trips v. Day of Week")
 
-#total amount paid v. payment type (undetermined what each number stands for...)
-y15 %>% #entire year
-  filter(total > 0) %>%
-  ggplot(aes(y = total, x = payment_type)) +
-  geom_point()
-```
+#total number of taxi rides for each day of the week (normalized)
+total <- sum(tot_day$tot)
+tot_day_ave <- tot_day %>%
+  mutate(ave = tot_day$tot/total)
 
-```{r}
-#number of taxi rides per hour 
-y15_hour <- data.frame(y15, hour = str_sub(y15$p_time, -9, -7)) %>%
-  mutate(weekday = lubridate::wday(p_time)) %>%
+tot_day_ave %>%
+  ggplot(aes(y = ave, x = weekday)) +
+  geom_bar(stat ="identity") +
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Number of Trips v. Day of Week - Normalized")
+
+#total number of taxi rides per hour
+tot_hour <- tot %>%
   group_by(hour, weekday) %>%
   summarise(tot = n())
-ggplot(y15_hour, aes(y = tot, x = hour, fill = weekday)) +
-  geom_bar(stat ="identity") 
+
+tot_hour %>%
+  ggplot(aes(y = tot, x = hour, fill = weekday)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Number of Trips v. Hour")
+
+#total number of taxi rides per hour (normalized) 
+tot_hour_ave <- tot %>%
+  group_by(hour) %>%
+  summarise(tot = n()) %>%
+  mutate(ave = tot/sum(tot))
+
+tot_hour_ave %>%
+  ggplot(aes(y = ave, x = hour)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Number of Trips v. Hour - Normalized")
 ```
 
-```{r, fig.width=10, fig.height=10}
-#number of taxi rides by hour (seperated by weekday)
-ggplot(y15_hour, aes(y = tot, x = hour, fill = weekday)) +
-  geom_bar(stat ="identity") +
-  facet_grid(weekday ~ .)
+**Number of Passengers**
+```{r}
+#number of passengers per day of year
+tot_passengers_year <- tot %>%
+  group_by(yday) %>%
+  summarize(tot = sum(num_passengers))
+  
+tot_passengers_year %>%
+  ggplot(aes(x = yday, y = tot)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Number of Passengers v. Day of Year")
+
+#number of passengers per month
+tot_passengers_month <- tot %>%
+  group_by(month) %>%
+  summarize(tot = sum(num_passengers))
+  
+tot_passengers_month %>%
+  ggplot(aes(x = month, y = tot)) +
+  geom_bar(stat ="identity") + 
+  scale_x_continuous(breaks=seq(1,12,1)) + 
+  ggtitle("Number of Passengers v. Month")
+
+#number of passengers per weekday
+tot_passengers_day <- tot %>%
+  group_by(weekday) %>%
+  summarize(tot = sum(num_passengers))
+  
+tot_passengers_day %>%
+  ggplot(aes(x = weekday, y = tot)) +
+  geom_bar(stat ="identity") + 
+  scale_x_continuous(breaks=seq(1,7,1)) + 
+  ggtitle("Number of Passengers v. Day of Week")
+
+#number of passengers per hour
+tot_passengers_hour <- tot %>%
+  group_by(hour) %>%
+  summarize(tot = sum(num_passengers))
+  
+tot_passengers_hour %>%
+  ggplot(aes(x = hour, y = tot)) +
+  geom_bar(stat ="identity") + 
+  ggtitle("Number of Passengers v. Hour")
+```  
+
+**KML**
+```{r}
+#Filter and isolate lat and long coordinates
+
+y15 <- y15 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat15 <- y15 %>%
+  select(p_lat)
+lat15 <- lat15[, 1]
+
+long15 <- y15 %>%
+  select(p_long)
+long15 <- long15[, 1]
+
+y14 <- y14 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat14 <- y14 %>%
+  select(p_lat)
+lat14 <- lat14[, 1]
+
+long14 <- y14 %>%
+  select(p_long)
+long14 <- long14[, 1]
+
+y13 <- y13 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat13 <- y13 %>%
+  select(p_lat)
+lat13 <- lat13[, 1]
+
+long13 <- y13 %>%
+  select(p_long)
+long13 <- long13[, 1]
+
+y12 <- y12 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat12 <- y12 %>%
+  select(p_lat)
+lat12 <- lat12[, 1]
+
+long12 <- y12 %>%
+  select(p_long)
+long12 <- long12[, 1]
+
+y11 <- y11 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat11 <- y11 %>%
+  select(p_lat)
+lat11 <- lat11[, 1]
+
+long11 <- y11 %>%
+  select(p_long)
+long11 <- long11[, 1]
+
+y10 <- y10 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat10 <- y10 %>%
+  select(p_lat)
+lat10 <- lat10[, 1]
+
+long10 <- y10 %>%
+  select(p_long)
+long10 <- long10[, 1]
+
+y09 <- y09 %>%
+  filter(p_lat != 0, p_long !=0, !is.na(p_lat), !is.na(p_long))
+
+lat09 <- y09 %>%
+  select(p_lat)
+lat09 <- lat09[, 1]
+
+long09 <- y09 %>%
+  select(p_long)
+long09 <- long09[, 1]
+```
+
+```{r}
+#Rondomly sample 100 rides from each year
+rand <- sample(1:240000, 100, replace=F) 
+
+library(XML)
+doc <- newXMLDoc()
+root <- newXMLNode(name = "kml", namespaceDefinitions = "http://www.opengis.net/kml/2.2", doc = doc)
+d <- newXMLNode(name = "Document", parent = root)
+nm <- newXMLNode(name = "name", "Taxi", parent = d)
+description <- newXMLNode(name = "description", "Taxi Rides in  NYC, 2009-2015", parent = d)
+
+datetime <- as.character(y15$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat15[i],",", long15[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+datetime <- as.character(y14$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat14[i],",", long14[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+datetime <- as.character(y13$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat13[i],",", long13[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+datetime <- as.character(y12$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat12[i],",", long12[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+datetime <- as.character(y11$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat11[i],",", long11[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+datetime <- as.character(y10$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat10[i],",", long10[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+
+datetime <- as.character(y09$p_time) 
+datetime <- gsub("/", "-", datetime)
+datetime <- gsub(" ", "T", datetime)
+datetime <- gsub("$", "Z", datetime)
+
+for (i in rand){
+  pm <- newXMLNode(name = "Placemark", parent = d)
+  p <- newXMLNode(name = "Point", parent = pm)
+  coor <- newXMLNode(name = "coordinates", c(lat09[i],",", long09[i]), parent = p)
+  ts <- newXMLNode(name = "TimeStamp", parent = pm)
+  when <- newXMLNode("when", datetime[i], parent = ts)
+}
+saveXML(doc, "/Users/siyaoma/Desktop/taxi_all.kml")
 ```
 
