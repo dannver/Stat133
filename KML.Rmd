@@ -659,7 +659,7 @@ long09 <- long09[, 1]
 ```
 
 ```{r}
-rand <- sample(1:240000, 10000, replace=F)
+rand <- sample(1:240000, 1000, replace=F)
 
 
 library(XML)
