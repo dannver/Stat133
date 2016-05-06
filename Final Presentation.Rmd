@@ -1,0 +1,23 @@
+---
+title: "Team Taxi"
+author: "Sudeshna Barman, Siyao Ma, Dannver Wu"
+output:
+  slidy_presentation:
+    css: style.css
+---
+
+# New York Taxi Services {#slide}
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+# Results: Time, Trip Length, Fare {#slide}
+
+```{r}
+summary(cars)
+```
+
+# Location {#slide}
+
+![Caption?](KML 2009-2015.png)
