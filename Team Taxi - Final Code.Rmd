@@ -1,0 +1,572 @@
+---
+title: "Stats 133 Final Project"
+author: "Dannver Wu, Siyao (Claire) Ma, Sudeshna Barman"
+date: "Sunday, May 1, 2016"
+output: 
+  html_document:
+    fig_height: 3
+    fig_width: 5
+---
+<!-- Don't edit in between this line and the one below -->
+```{r include=FALSE}
+# Don't delete this chunk if you are using the DataComputing package
+library(DataComputing)
+```
+*Source file* 
+```{r, results='asis', echo=FALSE}
+includeSourceDocuments()
+```
+<!-- Don't edit the material above this line -->
+
+**Downloading and Formatting the Data**
+```{r echo=FALSE}
+yellow2009_1 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-01_clean.csv")
+
+yellow2009_2 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-02_clean.csv")
+
+yellow2009_3 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-03_clean.csv")
+
+yellow2009_4 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-04_clean.csv")
+
+yellow2009_5 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-05_clean.csv")
+
+yellow2009_6 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-06_clean.csv")
+
+yellow2009_7 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-07_clean.csv")
+
+yellow2009_8 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-08_clean.csv")
+
+yellow2009_9 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-09_clean.csv")
+
+yellow2009_10 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-10_clean.csv")
+
+yellow2009_11 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-11_clean.csv")
+
+yellow2009_12 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2009-12_clean.csv")
+
+yellow2010_1 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-01_clean.csv")
+
+yellow2010_2 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-02_clean.csv")
+
+yellow2010_3 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-03_clean.csv")
+
+yellow2010_4 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-04_clean.csv")
+
+yellow2010_5 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-05_clean.csv")
+
+yellow2010_6 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-06_clean.csv")
+
+yellow2010_7 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-07_clean.csv")
+
+yellow2010_8 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-08_clean.csv")
+
+yellow2010_9 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-09_clean.csv")
+
+yellow2010_10 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-10_clean.csv")
+
+yellow2010_11 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-11_clean.csv")
+
+yellow2010_12 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2010-12_clean.csv")
+
+yellow2011_1 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-01_clean.csv")
+
+yellow2011_2 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-02_clean.csv")
+
+yellow2011_3 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-03_clean.csv")
+
+yellow2011_4 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-04_clean.csv")
+
+yellow2011_5 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-05_clean.csv")
+
+yellow2011_6 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-06_clean.csv")
+
+yellow2011_7 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-07_clean.csv")
+
+yellow2011_8 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-08_clean.csv")
+
+yellow2011_9 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-09_clean.csv")
+
+yellow2011_10 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-10_clean.csv")
+
+yellow2011_11 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-11_clean.csv")
+
+yellow2011_12 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2011-12_clean.csv")
+
+yellow2012_1 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-01_clean.csv")
+
+yellow2012_2 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-02_clean.csv")
+
+yellow2012_3 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-03_clean.csv")
+
+yellow2012_4 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-04_clean.csv")
+
+yellow2012_5 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-05_clean.csv")
+
+yellow2012_6 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-06_clean.csv")
+
+yellow2012_7 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-07_clean.csv")
+
+yellow2012_8 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-08_clean.csv")
+
+yellow2012_9 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-09_clean.csv")
+
+yellow2012_10 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-10_clean.csv")
+
+yellow2012_11 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-11_clean.csv")
+
+yellow2012_12 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2012-12_clean.csv")
+
+yellow2013_1 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-01_clean.csv")
+
+yellow2013_2 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-02_clean.csv")
+
+yellow2013_3 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-03_clean.csv")
+
+yellow2013_4 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-04_clean.csv")
+
+yellow2013_5 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-05_clean.csv")
+
+yellow2013_6 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-06_clean.csv")
+
+yellow2013_7 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-07_clean.csv")
+
+yellow2013_8 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-08_clean.csv")
+
+yellow2013_9 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-09_clean.csv")
+
+yellow2013_10 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-10_clean.csv")
+
+yellow2013_11 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-11_clean.csv")
+
+yellow2013_12 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2013-12_clean.csv")
+
+yellow2014_1 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-01_clean.csv")
+
+yellow2014_2 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-02_clean.csv")
+
+yellow2014_3 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-03_clean.csv")
+
+yellow2014_4 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-04_clean.csv")
+
+yellow2014_5 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-05_clean.csv")
+
+yellow2014_6 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-06_clean.csv")
+
+yellow2014_7 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-07_clean.csv")
+
+yellow2014_8 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-08_clean.csv")
+
+yellow2014_9 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-09_clean.csv")
+
+yellow2014_10 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-10_clean.csv")
+
+yellow2014_11 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-11_clean.csv")
+
+yellow2014_12 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2014-12_clean.csv")
+
+yellow2015_1 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-01_clean.csv")
+
+yellow2015_2 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-02_clean.csv")
+
+yellow2015_3 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-03_clean.csv")
+
+yellow2015_4 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-04_clean.csv")
+
+yellow2015_5 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-05_clean.csv")
+
+yellow2015_6 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-06_clean.csv")
+
+yellow2015_7 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-07_clean.csv")
+
+yellow2015_8 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-08_clean.csv")
+
+yellow2015_9 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-09_clean.csv")
+
+yellow2015_10 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-10_clean.csv")
+
+yellow2015_11 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-11_clean.csv")
+
+yellow2015_12 <- read.file("https://raw.githubusercontent.com/sudeshna-b/Stat133-Final/master/taxi_data/yellow_tripdata_2015-12_clean.csv")
+
+ytot <- rbind(yellow2009_1, yellow2009_2, yellow2009_3, yellow2009_4, yellow2009_5, yellow2009_6, yellow2009_7, yellow2009_8, yellow2009_9, yellow2009_10, yellow2009_11, yellow2009_12, yellow2010_1, yellow2010_2, yellow2010_3, yellow2010_4, yellow2010_5, yellow2010_6, yellow2010_7, yellow2010_8, yellow2010_9, yellow2010_10, yellow2010_11, yellow2010_12, yellow2011_1, yellow2011_2, yellow2011_3, yellow2011_4, yellow2011_5, yellow2011_6, yellow2011_7, yellow2011_8, yellow2011_9, yellow2011_10, yellow2011_11, yellow2011_12, yellow2012_1, yellow2012_2, yellow2012_3, yellow2012_4, yellow2012_5, yellow2012_6, yellow2012_7, yellow2012_8, yellow2012_9, yellow2012_10, yellow2012_11, yellow2012_12, yellow2013_1, yellow2013_2, yellow2013_3, yellow2013_4, yellow2013_5, yellow2013_6, yellow2013_7, yellow2013_8, yellow2013_9, yellow2013_10, yellow2013_11, yellow2013_12, yellow2014_1, yellow2014_2, yellow2014_3, yellow2014_4, yellow2014_5, yellow2014_6, yellow2014_7, yellow2014_8, yellow2014_9, yellow2014_10, yellow2014_11, yellow2014_12, yellow2015_1, yellow2015_2, yellow2015_3, yellow2015_4, yellow2015_5, yellow2015_6, yellow2015_7, yellow2015_8, yellow2015_9, yellow2015_10, yellow2015_11, yellow2015_12)
+
+ytot <- ytot %>%
+  mutate(year = lubridate::year(p_time)) %>%
+  mutate(month = lubridate::month(p_time, label=TRUE)) %>%
+  mutate(weekday = lubridate::wday(p_time, label=TRUE)) %>%
+  mutate(hour = str_sub(ytot$p_time, -9, -7))
+```
+
+**Fares**
+```{r}
+#total amount paid (including surchage, tolls, etc) v. distance traveled
+ytot %>%
+  ggplot(aes(y = total, x = distance)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  ggtitle("Figure 1: Distance Traveled v. Fare, Including Outliers") +
+  ylab("Total Fare ($)") +
+  xlab("Distance (mi)")
+```
+
+We conclude that the distance outliers are any cases with distance > 75. 
+We conclude that the fare outliers are any cases with fare > 300.
+
+```{r}
+ytot %>% #entire dataset, without outliers
+  filter(total > 0, distance < 75) %>%
+  ggplot(aes(y = total, x = distance)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  ggtitle("Figure 2: Distance Traveled v. Fare, Not Including Outliers") +
+  ylab("Total Fare ($)") +
+  xlab("Distance (mi)")
+
+#faceted by year, without outliers
+ytot %>%
+  filter(total > 0, distance < 75) %>%
+  ggplot(aes(y = total, x = distance)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  facet_wrap(~ year) +
+  ggtitle("Figure 3: Distance Traveled v. Fare by Year, Not Including Outliers") +
+  ylab("Total Fare ($)") +
+  xlab("Distance (mi)")
+
+#faceted by month, without outliers
+ytot %>%
+  filter(total > 0, distance < 75) %>%
+  ggplot(aes(y = total, x = distance)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  facet_wrap(~ month) +
+  ggtitle("Figure 4: Distance Traveled v. Fare by Month, Not Including Outliers") +
+  ylab("Total Fare ($)") +
+  xlab("Distance (mi)")
+```
+
+```{r}
+#average fare by year, without outliers
+ytot_year_ave_fare <- ytot %>%
+  filter(total > 0, total < 300) %>%
+  group_by(year)%>%
+  summarize(ave=mean(total))
+
+#line graph
+ytot_year_ave_fare %>%
+  ggplot(aes(x=year, y=ave)) +
+  geom_point() +
+  geom_line()+
+  scale_x_continuous(breaks=seq(2009,2015,1)) +
+  ggtitle("Figure 5: Average Fare by Year, Not Including Outliers") +
+  ylab("Average Fare ($)") +
+  xlab("Year")
+
+#bar graph
+ytot_year_ave_fare %>%
+  ggplot(aes(x=year, y=ave, col=year, fill=year)) +
+  geom_bar(stat ="identity", alpha=.5) +
+  scale_x_continuous(breaks=seq(2009,2015,1)) +
+  ggtitle("Figure 6: Average Fare by Year, Not Including Outliers") +
+  ylab("Average Fare ($)") +
+  xlab("Year")
+
+#boxplot
+ytot %>%
+  filter(total > 0, total < 300) %>%
+  ggplot(aes(factor(year), total)) + 
+  geom_boxplot(aes(color=year, fill=year), alpha=.25, outlier.colour="gray") + 
+  ggtitle("Figure 7: Distribution of Fares by Year, Not Including Outliers") +
+  ylab("Fare ($)") + 
+  xlab("Year")
+```
+
+```{r}
+#average fare by month, without outliers
+ytot_month_ave_fare <- ytot %>%
+  filter(total > 0, total < 300) %>%
+  group_by(month)%>%
+  summarize(ave=mean(total))
+
+#line graph
+ytot_month_ave_fare %>%
+  ggplot(aes(x=month, y=ave)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Figure 8: Average Fare by Month, Not Including Outliers") +
+  ylab("Average Fare ($)") +
+  xlab("Month")
+
+#bar graph
+ytot_month_ave_fare %>%
+  ggplot(aes(x=month, y=ave, col=month, fill=month)) +
+  geom_bar(stat ="identity", alpha=0.5) +
+  ggtitle("Figure 9: Average Fare by Month, Not Including Outliers") +
+  ylab("Average Fare ($)") +
+  xlab("Month")
+
+#boxplot
+ytot %>%
+  filter(total > 0, total < 300) %>%
+  ggplot(aes(factor(month), total)) + 
+  geom_boxplot(aes(color=month, fill=month), alpha=.25, outlier.colour="gray") + 
+  ggtitle("Figure 10: Distribution of Fares by Month, Not Including Outliers") +
+  ylab("Fare ($)") + 
+  xlab("Month")
+```
+
+```{r}
+#average fare by day of the week, without outliers
+ytot_day_ave_fare <- ytot %>%
+  filter(total > 0, total < 300) %>%
+  group_by(weekday)%>%
+  summarize(ave=mean(total))
+
+#line graph  
+ytot_day_ave_fare %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_point() +
+  geom_line()+
+  ggtitle("Figure 11: Average Fare by Day of the Week, Not Including Outliers") +
+  ylab("Average Fare ($)") +
+  xlab("Day of the Week")
+
+#bar graph
+ytot_day_ave_fare %>%
+  ggplot(aes(x=weekday, y=ave, col=weekday, fill=weekday)) +
+  geom_bar(stat ="identity", alpha=.5) +
+  ggtitle("Figure 12: Average Fare by Day of the Week, Not Including Outliers") +
+  ylab("Average Fare ($)") +
+  xlab("Day of the Week")
+
+#boxplot
+ytot %>%
+  filter(total > 0, total < 300) %>%
+  ggplot(aes(factor(weekday), total)) + 
+  geom_boxplot(aes(color=weekday, fill=weekday), alpha=.25, outlier.colour="gray") + 
+  ggtitle("Figure 13: Distribution of Fares by Day of the Week, Not Including Outliers") +
+  ylab("Fare ($)") + 
+  xlab( "Day of the Week")
+```
+
+```{r}
+#average fare by time of day, without outliers
+ytot_hour_ave_fare <- ytot %>%
+  filter(total > 0, total < 300) %>%
+  group_by(hour) %>%
+  summarize(ave=mean(total))
+
+#line graph
+ytot_hour_ave_fare %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Figure 14: Average Fare by Hour, Not Including Outliers") +
+  ylab("Average Fare ($)") +
+  xlab("Hour")
+
+#bar graph
+ytot_hour_ave_fare %>%
+  ggplot(aes(x=hour, y=ave, col=hour, fill=hour)) +
+  geom_bar(stat ="identity", alpha=.5) +
+  ggtitle("Figure 15: Average Fare by Hour, Not Including Outliers") +
+  ylab("Average Fare ($)") +
+  xlab("Hour")
+
+#boxplot
+ytot %>%
+  filter(total > 0, total < 300) %>%
+  ggplot(aes(factor(hour), total)) + 
+  geom_boxplot(aes(color=hour, fill=hour), alpha=.25, outlier.colour="gray") + 
+  ggtitle("Figure 16: Distribution of Fares by Hour, Not Including Outliers") +
+  ylab("Fare ($)") + 
+  xlab("Hour")
+```
+
+**Trip Length/Distance**
+```{r}
+#average trip length by year, without outliers
+ytot_year_ave_dist <- ytot %>%
+  filter(distance > 0, distance < 75)%>%
+  group_by(year)%>%
+  summarize(ave=mean(distance))
+
+#line graph
+ytot_year_ave_dist %>%
+  ggplot(aes(x=year, y=ave)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks=seq(2009, 2015, 1)) +
+  ggtitle("Figure 17: Average Trip Distance by Year, Not Including Outliers") +
+  ylab("Average Distance Traveled (mi)") +
+  xlab("Year")
+
+#bar graph
+ytot_year_ave_dist %>%
+  ggplot(aes(x=year, y=ave, col=year, fill=year)) +
+  geom_bar(stat ="identity", alpha=.5) +
+  scale_x_continuous(breaks=seq(2009, 2015, 1)) +
+  ggtitle("Figure 18: Average Trip Distance by Year, Not Including Outliers") +
+  ylab("Average Distance Traveled (mi)") +
+  xlab("Year")
+
+#boxplot
+ytot %>%
+  filter(distance > 0, distance < 75) %>%
+  ggplot(aes(factor(year), distance)) + 
+  geom_boxplot(aes(color=year, fill=year), alpha=.25, outlier.colour="gray") + 
+  ggtitle("Figure 19: Distribution of Distances by Year, Not Including Outliers") +
+  ylab("Trip Distance (mi)") + 
+  xlab("Year")
+```
+
+```{r}
+#average trip length by month, without outliers
+ytot_month_ave_dist <- ytot %>%
+  filter(distance > 0, distance < 75)%>%
+  group_by(month)%>%
+  summarize(ave=mean(distance))
+
+#line graph
+ytot_month_ave_dist %>%
+  ggplot(aes(x=month, y=ave)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Figure 20: Average Trip Distance by Month, Not Including Outliers") +
+  ylab("Average Distance Traveled (mi)") +
+  xlab("Month")
+
+#bar graph
+ytot_month_ave_dist %>%
+  ggplot(aes(x=month, y=ave, col=month, fill=month)) +
+  geom_bar(stat ="identity", alpha=0.5) +
+  ggtitle("Figure 21: Average Trip Distance by Month, Not Including Outliers") +
+  ylab("Average Distance Traveled (mi)") +
+  xlab("Month")
+
+#boxplot
+ytot %>%
+  filter(distance > 0, distance < 75) %>%
+  ggplot(aes(factor(month), distance)) + 
+  geom_boxplot(aes(color=month, fill=month), alpha=.25, outlier.colour="gray") + 
+  ggtitle("Figure 22: Distribution of Distances by Month, Not Including Outliers") +
+  ylab("Trip Distance (mi)") + 
+  xlab("Month")
+```
+
+```{r}
+#average trip length by day of the week, without outliers
+ytot_day_ave_dist <- ytot %>%
+  filter(distance > 0, distance < 75)%>%
+  group_by(weekday)%>%
+  summarize(ave=mean(distance))
+  
+#line graph
+ytot_day_ave_dist %>%
+  ggplot(aes(x=weekday, y=ave)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Figure 23: Average Trip Distance by Day of the Week, Not Including Outliers") +
+  ylab("Average Distance Traveled (mi)") +
+  xlab("Day of the Week")
+
+#bar graph
+ytot_day_ave_dist %>%
+  ggplot(aes(x=weekday, y=ave, col=weekday, fill=weekday)) +
+  geom_bar(stat ="identity", alpha=0.5) +
+  ggtitle("Figure 24: Average Trip Distance by Day of Week, Not Including Outliers") +
+  ylab("Average Distance Traveled (mi)") +
+  xlab("Day of Week")
+
+#boxplot
+ytot %>%
+  filter(distance > 0, distance < 75) %>%
+  ggplot(aes(factor(weekday), distance)) + 
+  geom_boxplot(aes(color=weekday, fill=weekday), alpha=.25, outlier.colour="gray") + 
+  ggtitle("Figure 25: Distribution of Distances by Day of the Week, Not Including Outliers") +
+  ylab("Trip Distance (mi)") + 
+  xlab("Day of the Week")
+```
+
+```{r}
+#average trip length by time of day, without outliers
+ytot_hour_ave_dist <- ytot %>%
+  filter(distance > 0, distance < 75) %>%
+  group_by(hour) %>%
+  summarize(ave=mean(distance))
+
+#line graph
+ytot_hour_ave_dist %>%
+  ggplot(aes(x=hour, y=ave)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Figure 26: Average Trip Distance by Hour, Not Including Outliers") +
+  ylab("Average Distance Traveled (mi)") +
+  xlab("Hour")
+
+#bar graph
+ytot_hour_ave_dist %>%
+  ggplot(aes(x=hour, y=ave, col=hour, fill=hour)) +
+  geom_bar(stat ="identity", alpha=.05) +
+  ggtitle("Figure 27: Average Trip Distance by Hour, Not Including Outliers") +
+  ylab("Average Distance Traveled (mi)") +
+  xlab("Hour")
+
+#boxplot
+ytot %>%
+  filter(distance > 0, distance < 75) %>%
+  ggplot(aes(factor(hour), distance)) + 
+  geom_boxplot(aes(color=hour, fill=hour), alpha=.25, outlier.colour="gray") + 
+  ggtitle("Figure 28: Distribution of Distances by Hour, Not Including Outliers") +
+  ylab("Trip Distance (mi)") + 
+  xlab("Hour")
+```
+
+**Number of Rides**
+```{r}
+#total number of taxi rides for each day of week
+ytot_day_rides <- ytot %>%
+  group_by(weekday) %>%
+  summarise(tot = n())
+
+#line graph
+ytot_day_rides %>%
+  ggplot(aes(y = tot, x = weekday)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Figure 29: Total Number of Rides by Day of the Week, Not Including Outliers") +
+  ylab("Number of Rides") +
+  xlab("Day of the Week")
+
+#bar graph
+ytot_day_rides %>%
+  ggplot(aes(y=tot, x=weekday, col=weekday, fill=weekday)) +
+  geom_bar(stat ="identity", alpha=0.5) +
+  ggtitle("Figure 30: Total Number of Rides by Day of the Week, Not Including Outliers") +
+  ylab("Number of Rides") +
+  xlab("Day of the Week")
+```
+
+```{r}
+#total number of taxi rides per hour
+ytot_hour_rides <- ytot %>%
+  group_by(hour) %>%
+  summarize(tot = n())
+
+#line graph
+ytot_hour_rides %>%
+  ggplot(aes(x = hour, y = tot)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Figure 31: Total Number of Rides by Hour, Not Including Outliers") +
+  ylab("Number of Rides") +
+  xlab("Hour")
+
+#bar graph
+ytot_hour_rides %>%
+  ggplot(aes(x=hour, y=tot, col=hour, fill=hour)) +
+  geom_bar(stat ="identity", alpha=0.5) +
+  ggtitle("Figure 32: Total Number of Rides by Hour, Not Including Outliers") +
+  ylab("Number of Rides") +
+  xlab("Hour")
+```
