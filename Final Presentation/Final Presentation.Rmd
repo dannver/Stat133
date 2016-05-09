@@ -1,0 +1,80 @@
+---
+title: "Team Taxi"
+author: "Sudeshna Barman, Siyao Ma, Dannver Wu"
+output:
+  slidy_presentation:
+    css: style.css
+---
+
+# New York Taxi Services {#slide}
+
+<div class="grey" id="nytaxi">
+With the emergence of services like Uber and Lyft, how can taxi drivers remain competitive?
+</div>
+
+<div>
+  <div class="left">
+  <div class="coltitle">
+  Questions
+  </div>
+  <div class="content grey">
+  Where and when should taxis be allocated in order for taxi drivers to...
+  <div class="indent">
+  - maximize the number of rides?
+  - maximize the amount of fare collected?
+  </div>
+  </div>
+  </div>
+
+  <div class="right">
+  <div class="coltitle">
+  Data
+  </div>
+  <div class="content grey">
+  Time Period: 2009 - 2015\
+  Variables:
+  <div class="indent">
+  - Time
+  - Trip Length
+  - Fare
+  - Location
+  </div>
+  </div>
+  </div>
+</div>
+
+<div class="footer grey">
+Data Source: <i>http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml</i>
+</div>
+
+# Results: Time, Trip Length, Fare {#slide}
+
+<div>
+<div class="leftresults content grey">
+  Early morning trips net the most profit
+  <div class="indent">
+  - Less trips taken
+  - Greater distance traveled
+  </div>
+  <img src="Rplot4.png" width="75%">
+  <div id="sidecaption">
+  When broken down by weekday, results appear to be consistent.
+  </div>
+</div>
+<div class="rightresults">
+<img src="Rplot.png" width="100%" height="200">
+<img src="Rplot2.png" width="100%" height="200">
+<img src="Rplot3.png" width="100%" height="200">
+</div>
+</div>
+
+# Location {#slide}
+
+<div>
+  <div class="left grey" id="kmltext">
+  Distribution of sample of pickup location data. Highlighted is the most active area for taxi pickups.
+  </div>
+  <div>
+  <img src="KML Presentation.png" width="75%">
+  </div>
+</div>
