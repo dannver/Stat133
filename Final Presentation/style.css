@@ -9,11 +9,13 @@ body {
 .left {
   float: left;
   width: 55%;
+  padding-top: 20px;
 }
 
 .right {
   float: right;
   width: 40%;
+  padding-top: 20px;
 }
 
 .grey {
@@ -51,7 +53,7 @@ body {
 .rightresults {
   width: 38%;
   position: absolute;
-  right: 50px;
+  right: 25px;
   top: 50px;
   line-height: 0;
 }

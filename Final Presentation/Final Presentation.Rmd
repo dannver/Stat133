@@ -58,7 +58,7 @@ Data Source: <i>http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml</i
   </div>
   <img src="Rplot4.png" width="75%">
   <div id="sidecaption">
-  When broken down by weekday, results appear to be consistent.
+  When broken down by weekday, results appear consistent.
   </div>
 </div>
 <div class="rightresults">
